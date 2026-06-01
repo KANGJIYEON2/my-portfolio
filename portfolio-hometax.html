@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>강지연 · 포트폴리오 (Hometax 스타일)</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  :root {
+    --navy: #16335c;
+    --blue: #0B5FA5;
+    --blue-dk: #084a82;
+    --panel: #eef3fa;
+    --panel-2: #e3ecf7;
+    --th: #dce6f4;
+    --line: #b9c6db;
+    --line-soft: #d3dcea;
+    --ink: #1a1f29;
+    --ink-2: #3b4453;
+    --ink-3: #6b7588;
+    --red: #c0392b;
+    --ok: #1a7a3f;
+    --kr: 'Malgun Gothic', '맑은 고딕', 'Pretendard', sans-serif;
+  }
+
+  html { background: #8a93a3; }
+  body {
+    font-family: var(--kr);
+    color: var(--ink);
+    font-size: 11.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ━━ A4 sheet ━━ */
+  .sheet {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 12px auto;
+    background: #fff;
+    padding: 14mm 14mm 12mm;
+    position: relative;
+    box-shadow: 0 2px 14px rgba(0,0,0,.35);
+  }
+
+  /* ━━ Top utility bar ━━ */
+  .util {
+    background: var(--navy);
+    color: #cdd9ee;
+    font-size: 9px;
+    letter-spacing: .02em;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: -14mm -14mm 0;
+    padding-left: 14mm; padding-right: 14mm;
+  }
+  .util .right { color: #9fb4d6; }
+
+  /* ━━ Masthead ━━ */
+  .mast {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0 12px;
+    border-bottom: 3px solid var(--blue);
+    position: relative;
+  }
+  .logo {
+    width: 42px; height: 42px;
+    border: 2px solid var(--blue);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; color: var(--blue); font-size: 15px; letter-spacing: -.04em;
+    background: var(--panel);
+  }
+  .mast h1 { font-size: 21px; color: var(--navy); letter-spacing: -.02em; }
+  .mast .sub { font-size: 10.5px; color: var(--ink-3); margin-top: 3px; letter-spacing: .01em; }
+
+  /* official seal */
+  .seal {
+    position: absolute; right: 4px; top: 8px;
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 2.5px solid var(--red);
+    color: var(--red);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-weight: 800; line-height: 1.05; transform: rotate(-9deg);
+    opacity: .82;
+  }
+  .seal .s1 { font-size: 13px; letter-spacing: .12em; }
+  .seal .s2 { font-size: 7.5px; letter-spacing: .06em; margin-top: 2px; }
+
+  /* ━━ Tab bar (static, decorative) ━━ */
+  .tabs {
+    display: flex; gap: 3px; margin-top: 12px;
+  }
+  .tabs span {
+    flex: 1; text-align: center;
+    font-size: 10px; font-weight: 700; color: var(--ink-2);
+    background: var(--panel); border: 1px solid var(--line-soft);
+    border-bottom: none; padding: 7px 0; border-radius: 4px 4px 0 0;
+  }
+  .tabs span.on { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  /* ━━ Section header ━━ */
+  .sec {
+    margin-top: 16px;
+    page-break-inside: auto;
+  }
+  .sec-h {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--navy);
+    color: #fff;
+    padding: 7px 11px;
+    font-size: 12.5px; font-weight: 800; letter-spacing: .01em;
+    border-radius: 4px 4px 0 0;
+  }
+  .sec-h .no {
+    background: #fff; color: var(--navy);
+    font-size: 10px; font-weight: 800;
+    width: 18px; height: 18px; border-radius: 3px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .sec-h .en { margin-left: auto; font-size: 9px; font-weight: 600; color: #9fb4d6; letter-spacing: .06em; }
+
+  /* ━━ Tables (Hometax form style) ━━ */
+  table { width: 100%; border-collapse: collapse; }
+  .form th, .form td {
+    border: 1px solid var(--line);
+    padding: 7px 10px;
+    vertical-align: top;
+    text-align: left;
+  }
+  .form th {
+    background: var(--th);
+    color: var(--navy);
+    font-weight: 700;
+    width: 110px;
+    white-space: nowrap;
+  }
+  .form td { background: #fff; color: var(--ink-2); }
+  .form td b { color: var(--ink); font-weight: 700; }
+  .form .full { width: auto; }
+
+  .note {
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    border-top: none;
+    padding: 9px 11px;
+    font-size: 10.5px; color: var(--ink-2); line-height: 1.7;
+  }
+  .note b { color: var(--navy); }
+
+  /* summary intro box */
+  .intro {
+    border: 1px solid var(--line); border-top: 3px solid var(--blue);
+    background: var(--panel);
+    padding: 11px 13px; margin-top: 4px;
+    font-size: 11.5px; line-height: 1.75; color: var(--ink-2);
+  }
+  .intro b { color: var(--navy); font-weight: 800; }
+  .intro .lead { font-size: 13px; color: var(--ink); font-weight: 800; margin-bottom: 5px; }
+
+  /* ━━ Project block ━━ */
+  .proj { margin-top: 12px; page-break-inside: avoid; break-inside: avoid; }
+  .proj-h {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--blue);
+    color: #fff; padding: 6px 10px; border-radius: 4px 4px 0 0;
+  }
+  .proj-h .pno {
+    background: #fff; color: var(--blue); font-weight: 800; font-size: 11px;
+    padding: 1px 7px; border-radius: 3px;
+  }
+  .proj-h .pname { font-size: 13px; font-weight: 800; letter-spacing: .01em; }
+  .proj-h .pkr { font-size: 10px; font-weight: 600; color: #d8e6f7; }
+  .proj-h .ptag {
+    margin-left: auto; display: flex; gap: 5px; align-items: center;
+  }
+  .proj-h .badge {
+    background: var(--navy); color: #fff; font-size: 8.5px; font-weight: 700;
+    padding: 2px 7px; border-radius: 10px; letter-spacing: .03em;
+  }
+  .proj-h .yr { font-size: 9.5px; color: #d8e6f7; }
+
+  .metrics {
+    display: flex; border: 1px solid var(--line); border-top: none;
+  }
+  .metric {
+    flex: 1; text-align: center; padding: 7px 4px;
+    border-right: 1px solid var(--line-soft);
+  }
+  .metric:last-child { border-right: none; }
+  .metric .v { font-size: 14px; font-weight: 800; color: var(--blue); line-height: 1.1; }
+  .metric .l { font-size: 8.5px; color: var(--ink-3); margin-top: 2px; }
+
+  .url {
+    color: var(--blue-dk); font-weight: 700; text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .pill {
+    display: inline-block; background: var(--panel-2); color: var(--navy);
+    border: 1px solid var(--line-soft); border-radius: 3px;
+    padding: 1px 6px; margin: 1px 2px 1px 0; font-size: 10px; font-weight: 600;
+  }
+
+  .hl { color: var(--blue-dk); font-weight: 700; }
+  .chk { color: var(--ok); font-weight: 800; }
+
+  /* footer */
+  .foot {
+    margin-top: 18px; padding-top: 9px; border-top: 1px solid var(--line-soft);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 9px; color: var(--ink-3);
+  }
+  .foot .stamp { color: var(--red); font-weight: 700; }
+
+  @page { size: A4; margin: 12mm 12mm; }
+  @media print {
+    html, body { background: #fff; }
+    /* @page가 모든 페이지 여백을 담당 → 시트 자체 패딩/네거티브 마진 제거 */
+    .sheet { margin: 0; padding: 0; width: auto; min-height: 0; box-shadow: none; }
+    .util { margin: 0 0 8px; padding-left: 10px; padding-right: 10px; border-radius: 4px; }
+    /* 블록이 페이지 접힘에서 잘리지 않도록 */
+    .proj { page-break-inside: avoid; break-inside: avoid; }
+    .proj-h, .sec-h { page-break-after: avoid; }
+    .form, .metrics, .intro, .note { page-break-inside: avoid; break-inside: avoid; }
+    /* 프로젝트 섹션(3)은 여러 페이지로 나뉘어야 하므로 avoid 금지 */
+    .sec { page-break-inside: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="util">
+    <span>PORTFOLIO · 강지연 (Kang Jiyeon) · Product Engineer</span>
+    <span class="right">발급일 2026-06-01 · 문서번호 PF-2026-0601</span>
+  </div>
+
+  <div class="mast">
+    <div class="logo">이음</div>
+    <div>
+      <h1>강지연 · 개발자 포트폴리오</h1>
+      <div class="sub">세무·회계 5년 도메인 × AI 프로덕트 · 6개 서비스 기획~배포 단독 개발</div>
+    </div>
+    <div class="seal"><span class="s1">이음</span><span class="s2">team-ieum</span></div>
+  </div>
+
+  <div class="tabs">
+    <span class="on">기본정보</span>
+    <span>보유역량</span>
+    <span>프로젝트 명세</span>
+    <span>관심분야·연락처</span>
+  </div>
+
+  <!-- 1. 기본정보 -->
+  <div class="sec">
+    <div class="sec-h"><span class="no">1</span> 기본 정보 <span class="en">BASIC INFO</span></div>
+    <table class="form">
+      <tr>
+        <th>성명</th><td>강지연 (Kang Jiyeon)</td>
+        <th>직무</th><td>Product Engineer · 풀스택 + AI</td>
+      </tr>
+      <tr>
+        <th>도메인 경력</th><td>세무·회계 실무 <b>5년</b></td>
+        <th>소재지</th><td>대한민국 서울 (Seoul, KR)</td>
+      </tr>
+      <tr>
+        <th>이메일</th><td>hihello516@naver.com</td>
+        <th>GitHub</th><td>github.com/KANGJIYEON2</td>
+      </tr>
+      <tr>
+        <th>소속</th>
+        <td colspan="3">1인 개발팀 <b>"이음"</b> (team-ieum) — 사람들의 불편함을 해소하고자 직접 만든 작은 팀. 모든 서비스를 이 이름으로 <b>기획·개발·배포·운영까지 단독</b> 수행.</td>
+      </tr>
+    </table>
+    <div class="intro">
+      <div class="lead">"문제를 프로덕트로 만드는 엔지니어"</div>
+      세무사사무실에서 세무 신고·결산 마감·세무조사 대응을 <b>5년</b> 하며, 어떤 텍스트북에도 없는 이유로 숫자가 안 맞는 현장을 겪었습니다.
+      그 과정에서 <b>좋은 도구는 도메인 안에서 만들어진다</b>는 걸 배웠고, 현장에서 직접 겪은 문제를
+      AI · 룰 엔진 · RAG · 자동화로 풀어낸 <b>6개 서비스를 기획부터 배포·운영까지 단독으로</b> 만들었습니다.
+    </div>
+  </div>
+
+  <!-- 2. 보유역량 -->
+  <div class="sec">
+    <div class="sec-h"><span class="no">2</span> 보유 역량 <span class="en">COMPETENCIES</span></div>
+    <table class="form">
+      <tr>
+        <th>도메인</th>
+        <td colspan="3">
+          한국 세법 (5년) · K-IFRS/GAAP (5년) · 세무조사 대응 (3년) ·
+          통장 대사/결산 마감 (5년) · 사무 자동화 (4년)
+        </td>
+      </tr>
+      <tr>
+        <th>프론트엔드</th>
+        <td colspan="3">
+          <span class="pill">Next.js 16</span><span class="pill">React 19</span><span class="pill">TypeScript</span>
+          <span class="pill">Tailwind</span><span class="pill">Zustand</span><span class="pill">PWA</span>
+        </td>
+      </tr>
+      <tr>
+        <th>백엔드</th>
+        <td colspan="3">
+          <span class="pill">FastAPI</span><span class="pill">Python</span><span class="pill">Pydantic v2</span>
+          <span class="pill">SQLAlchemy / SQLModel</span><span class="pill">PostgreSQL</span><span class="pill">SSE 실시간</span>
+        </td>
+      </tr>
+      <tr>
+        <th>AI · RAG</th>
+        <td colspan="3">
+          <span class="pill">OpenAI</span><span class="pill">Anthropic</span><span class="pill">FAISS RAG</span>
+          <span class="pill">임베딩 검색</span><span class="pill">Whisper STT</span><span class="pill">Vision</span>
+        </td>
+      </tr>
+      <tr>
+        <th>배포·운영</th>
+        <td colspan="3">
+          <span class="pill">Docker</span><span class="pill">Caddy(자동 HTTPS)</span><span class="pill">AWS EC2</span>
+          <span class="pill">Vercel</span> — 4개 서비스를 단일 리버스 프록시 뒤 Docker Compose 배포, 2개는 Vercel
+        </td>
+      </tr>
+    </table>
+    <div class="note">
+      <b>공통 엔지니어링 원칙</b> &nbsp;①&nbsp;LLM을 신뢰가능하게: 자유 텍스트 파싱 금지 → JSON/tool_use 구조화 출력, <b>룰엔진을 baseline·LLM은 보조</b>, 출처/룰ID만 인용해 환각 차단.
+      &nbsp;②&nbsp;보안 우선: <b>eval() 미사용</b> · PII 마스킹 · JWT/argon2 · 멀티테넌트 cross-tenant 차단.
+      &nbsp;③&nbsp;검증 습관: pytest(susemi 237·netscope 43) · 골든셋 · <b>배포 후 직접 결함을 찾아 수정</b>.
+    </div>
+  </div>
+
+  <!-- 3. 프로젝트 명세 -->
+  <div class="sec">
+    <div class="sec-h"><span class="no">3</span> 프로젝트 명세 <span class="en">PROJECTS · 6</span></div>
+
+    <!-- P1 -->
+    <div class="proj">
+      <div class="proj-h">
+        <span class="pno">01</span>
+        <span class="pname">SUSEMI</span><span class="pkr">수세미 · 연말정산 "왜?" 분석 엔진</span>
+        <span class="ptag"><span class="badge">세무·TAX</span><span class="yr">2025</span></span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">237</div><div class="l">테스트 케이스</div></div>
+        <div class="metric"><div class="v">0줄</div><div class="l">eval() 사용</div></div>
+        <div class="metric"><div class="v">정수</div><div class="l">세금 풀산식</div></div>
+        <div class="metric"><div class="v">100%</div><div class="l">단독 개발</div></div>
+      </div>
+      <table class="form">
+        <tr><th>한 줄 정의</th><td class="full">연말정산 결과를 "얼마"가 아니라 <b>"왜 그 금액인지"를 법령 조항까지 trace</b>해 증명하는 분석 엔진.</td></tr>
+        <tr><th>문제</th><td>시중 계산기는 "환급 OO원"만 보여줄 뿐, <span class="hl">왜 그 금액인지·어디서 더 줄일 수 있는지</span>를 설명하지 않음.</td></tr>
+        <tr><th>해결</th><td>세액을 <span class="hl">정수(원 단위) 풀산식</span>으로 직접 계산 → 각 단계에 <span class="hl">CalcStep(법령 anchor·공식·입출력) trace</span> → 회사 신고분과 cross-check → 5년 시뮬·절세 추천. 룰은 JSON+Pydantic discriminated union으로 평가(<span class="chk">eval() 0줄</span>). LLM "Why" 해설은 시스템이 준 anchor만 인용 → 환각 차단. <span class="chk">배포 후 직접 발견·수정</span>: /analyze 비과세 이중차감 버그(화면별 세액 불일치)를 cross-check로 포착.</td></tr>
+        <tr><th>핵심 기술</th><td><span class="pill">Next.js 16</span><span class="pill">FastAPI</span><span class="pill">Pydantic v2</span><span class="pill">OpenAI</span><span class="pill">법령 API</span><span class="pill">AWS</span></td></tr>
+        <tr><th>라이브</th><td><a class="url" href="https://susemi.team-ieum.com">susemi.team-ieum.com</a> &nbsp;(로그인 없이 /wizard 4단계 체험)</td></tr>
+      </table>
+    </div>
+
+    <!-- P2 -->
+    <div class="proj">
+      <div class="proj-h">
+        <span class="pno">02</span>
+        <span class="pname">JONGSOSE HELPER</span><span class="pkr">종합소득세 신고 도우미 · RAG 챗봇</span>
+        <span class="ptag"><span class="badge">세무·RAG</span><span class="yr">2025</span></span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">RAG</div><div class="l">책자 근거 답변</div></div>
+        <div class="metric"><div class="v">0</div><div class="l">환각(없으면 "없음")</div></div>
+        <div class="metric"><div class="v">Vision</div><div class="l">서식 캡처 검토</div></div>
+        <div class="metric"><div class="v">1일</div><div class="l">MVP 가동</div></div>
+      </div>
+      <table class="form">
+        <tr><th>한 줄 정의</th><td class="full">공식 종합소득세 책자(2025 귀속)를 근거로 신고 절차·용어·서식을 즉답하는 <b>RAG 챗봇</b>.</td></tr>
+        <tr><th>문제</th><td>"추계가 뭐냐", "단순경비율 신고 어떻게 하냐" 질문에 매번 책자를 뒤지면 느리고 <span class="hl">사람마다 답이 흔들림</span>.</td></tr>
+        <tr><th>해결</th><td>책자 임베딩을 코사인 검색해 <span class="hl">근거 절(page PNG + OCR)</span>로 답하고, 없으면 <span class="hl">"책자에 없음"</span>으로 환각 차단. 일상어→도메인어 동의어 매핑("프리랜서"→"사업소득/추계"). 홈택스 서식 캡처는 <span class="hl">gpt-4o Vision</span>으로 누락·오류 검토. 인용 카드 클릭 시 원문 페이지 직접 검증.</td></tr>
+        <tr><th>핵심 기술</th><td><span class="pill">Next.js</span><span class="pill">GPT-4o</span><span class="pill">임베딩 RAG</span><span class="pill">Vision</span><span class="pill">Vercel</span></td></tr>
+        <tr><th>라이브</th><td><a class="url" href="https://jongsose-helper.vercel.app">jongsose-helper.vercel.app</a></td></tr>
+      </table>
+    </div>
+
+    <!-- P3 -->
+    <div class="proj">
+      <div class="proj-h">
+        <span class="pno">03</span>
+        <span class="pname">JANGBU DOCTOR</span><span class="pkr">장부닥터 · 통장 CSV → 세무조사 위험거래 점검</span>
+        <span class="ptag"><span class="badge">세무·AUDIT</span><span class="yr">2025</span></span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">6종</div><div class="l">위험 룰셋</div></div>
+        <div class="metric"><div class="v">RAG</div><div class="l">법령 근거</div></div>
+        <div class="metric"><div class="v">마스킹</div><div class="l">통장 정보 보호</div></div>
+        <div class="metric"><div class="v">XLSX</div><div class="l">처방전·리포트</div></div>
+      </div>
+      <table class="form">
+        <tr><th>한 줄 정의</th><td class="full">통장 CSV 한 번 올리면 <b>세무조사에 걸릴 거래만</b> 골라 등급화하는 사전 점검 도구. (세무사 자문 대체 ❌ / 사전 체크리스트 ✅)</td></tr>
+        <tr><th>문제</th><td>기장을 위탁한 회사의 경리/경영지원팀은 <span class="hl">무엇이 위험한지 모른 채</span> 1년을 보내고, 세무조사에서야 접대비·차량비·가공거래 문제가 드러남.</td></tr>
+        <tr><th>해결</th><td>은행별 포맷 정규화·마스킹 → <span class="hl">결정론적 룰 엔진 6종</span>(접대비 법인세법§25·차량비·개인경비·부가세·이상패턴·일반지출) 병렬 평가 → 거래별 위험 등급 + 법령 근거 + 조치 제안 → 처방전·엑셀. 룰이 가리키는 조항은 법령 RAG로 강화.</td></tr>
+        <tr><th>핵심 기술</th><td><span class="pill">Next.js</span><span class="pill">룰 엔진(TS)</span><span class="pill">법령 RAG</span><span class="pill">OpenAI</span><span class="pill">jsPDF</span><span class="pill">Vercel</span></td></tr>
+        <tr><th>라이브</th><td><a class="url" href="https://jangbu-doctor.vercel.app">jangbu-doctor.vercel.app</a></td></tr>
+      </table>
+    </div>
+
+    <!-- P4 -->
+    <div class="proj">
+      <div class="proj-h">
+        <span class="pno">04</span>
+        <span class="pname">SAFETY · AI</span><span class="pkr">안전AI · 산업안전(EHS) 위험관리 SaaS</span>
+        <span class="ptag"><span class="badge">EHS·SaaS</span><span class="yr">2025</span></span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">4종</div><div class="l">AI 에이전트</div></div>
+        <div class="metric"><div class="v">50+</div><div class="l">API 엔드포인트</div></div>
+        <div class="metric"><div class="v">4-Role</div><div class="l">멀티테넌트 RBAC</div></div>
+        <div class="metric"><div class="v">5개국</div><div class="l">안전가이드 언어</div></div>
+      </div>
+      <table class="form">
+        <tr><th>한 줄 정의</th><td class="full">관리자 웹 + 작업자 PWA <b>듀얼 트랙</b>, 단일 백엔드의 멀티테넌트 산업안전(EHS) 플랫폼.</td></tr>
+        <tr><th>문제</th><td>중소 제조 현장은 사고 기록·위험성 평가·교육이 <span class="hl">종이/엑셀</span>에 흩어져 있고, 외국인 작업자 비중이 높아 안전수칙 전달도 어려움.</td></tr>
+        <tr><th>해결</th><td>사고 등록 → AI 근본원인/체크리스트/법적근거 → 대시보드·월간 PDF. <span class="hl">BaseAgent 상속 AI 에이전트 4종</span>(사고분석/법령/뉴스/음성), FAISS 법령 RAG, Whisper 음성신고, 5개국어 안전가이드(QR). 멀티테넌트 4-Role RBAC — 모든 쿼리 company_id 격리. <span class="chk">배포 후 cross-tenant 누수 5건 발견·차단</span>, 약한 JWT 시크릿 강화.</td></tr>
+        <tr><th>핵심 기술</th><td><span class="pill">FastAPI</span><span class="pill">React 19</span><span class="pill">Whisper</span><span class="pill">FAISS RAG</span><span class="pill">PWA</span><span class="pill">PostgreSQL</span></td></tr>
+        <tr><th>라이브</th><td><a class="url" href="https://safety-ai.team-ieum.com">safety-ai.team-ieum.com</a> &nbsp;(회원가입 → admin 권한 전체 기능)</td></tr>
+      </table>
+    </div>
+
+    <!-- P5 -->
+    <div class="proj">
+      <div class="proj-h">
+        <span class="pno">05</span>
+        <span class="pname">F2A</span><span class="pkr">Feedback to Action · 병원 리뷰 LLM 자동 분류</span>
+        <span class="ptag"><span class="badge">AI·HEALTH</span><span class="yr">2025</span></span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">P0~P3</div><div class="l">심각도 4단계</div></div>
+        <div class="metric"><div class="v">저장 전</div><div class="l">PII 마스킹</div></div>
+        <div class="metric"><div class="v">2종</div><div class="l">멀티 LLM(GPT·Claude)</div></div>
+        <div class="metric"><div class="v">7</div><div class="l">대시보드 페이지</div></div>
+      </div>
+      <table class="form">
+        <tr><th>한 줄 정의</th><td class="full">병원/의원 환자 리뷰를 LLM으로 자동 triage(분류·심각도·담당팀)해 운영 개선 인사이트를 주는 시스템.</td></tr>
+        <tr><th>문제</th><td>병원은 매일 쌓이는 리뷰를 수작업으로 못 봐 <span class="hl">의료사고성 컴플레인(P0)·시설 위생 문제</span> 같은 중요한 신호를 놓침.</td></tr>
+        <tr><th>해결</th><td>인입(CSV/단건/배치) → <span class="hl">저장 전 PII 마스킹</span> → LLM triage → 대시보드 7페이지. P0(환자안전)은 <span class="hl">키워드 룰로 이중검증</span>, 미충족 시 P1 강등. 구조화 출력 강제(OpenAI json_object / Anthropic tool_use), 모델 prefix로 멀티 LLM 라우팅, 호출마다 비용 1행 적재.</td></tr>
+        <tr><th>핵심 기술</th><td><span class="pill">FastAPI</span><span class="pill">OpenAI</span><span class="pill">Anthropic</span><span class="pill">SQLModel</span><span class="pill">PostgreSQL</span><span class="pill">Next.js 15</span></td></tr>
+        <tr><th>라이브</th><td><a class="url" href="https://f2a.team-ieum.com">f2a.team-ieum.com</a> &nbsp;("데모 둘러보기" → 키 없이 읽기 전용 탐색)</td></tr>
+      </table>
+    </div>
+
+    <!-- P6 -->
+    <div class="proj">
+      <div class="proj-h">
+        <span class="pno">06</span>
+        <span class="pname">NETSCOPE · AI</span><span class="pkr">설명가능 로그 진단 · Explainable Log Diagnostics</span>
+        <span class="ptag"><span class="badge">XAI·LOG</span><span class="yr">2025</span></span>
+      </div>
+      <div class="metrics">
+        <div class="metric"><div class="v">R001~024</div><div class="l">결정론적 룰</div></div>
+        <div class="metric"><div class="v">L0~L4</div><div class="l">온라인 패턴 학습</div></div>
+        <div class="metric"><div class="v">SSE</div><div class="l">실시간 푸시</div></div>
+        <div class="metric"><div class="v">43</div><div class="l">pytest</div></div>
+      </div>
+      <table class="form">
+        <tr><th>한 줄 정의</th><td class="full">"위험하다"가 아니라 <b>"왜 그렇게 판단했는가"를 룰 ID·근거·점수로</b> 보여주는 설명가능 로그 진단 플랫폼.</td></tr>
+        <tr><th>문제</th><td>로그 알림 도구는 보통 "에러 N건"만 띄울 뿐, <span class="hl">왜 위험한지·무엇을 봐야 하는지</span> 설명하지 않아 신뢰하기 어려움.</td></tr>
+        <tr><th>해결</th><td>결정론적 룰 엔진(<span class="hl">R001~R024 + 13 interaction_bonus</span>)으로 severity·confidence 산출(재현 가능), Drain 알고리즘으로 로그 템플릿 온라인 학습(L0~L4, <span class="hl">안전 가드로 폭주 방지</span>), <span class="hl">실시간 SSE 푸시</span>(테넌트 필터). GPT 보고서는 "룰을 뒤집지 말 것" 강제. 분석 엔진은 ORM 미의존. <span class="chk">배포 후 멀티테넌트 PK 충돌·배치 중복 INSERT 발견·수정</span>.</td></tr>
+        <tr><th>핵심 기술</th><td><span class="pill">FastAPI</span><span class="pill">Drain</span><span class="pill">SSE</span><span class="pill">OpenAI</span><span class="pill">Next.js 16</span><span class="pill">PostgreSQL 16</span></td></tr>
+        <tr><th>라이브</th><td><a class="url" href="https://netscope-ai.team-ieum.com">netscope-ai.team-ieum.com</a> &nbsp;(데모 alice@demo.io / Demo1234!)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 4. 관심분야 · 연락처 -->
+  <div class="sec">
+    <div class="sec-h"><span class="no">4</span> 관심 분야 · 연락처 <span class="en">CURRENTLY &amp; CONTACT</span></div>
+    <table class="form">
+      <tr><th>탐구 중</th><td colspan="3"><b>RegTech · Compliance AI</b> — 규제·세법·감사 영역에서 AI가 사람을 대체하지 않고 <b>증강</b>하는 도구.</td></tr>
+      <tr><th>제작 중</th><td colspan="3"><b>Domain-First B2B SaaS</b> — 기능이 아니라 <b>워크플로우</b>에서 출발하는 멀티테넌트 SaaS / Provenance·검증가능성·감사추적이 1급 시민인 AI.</td></tr>
+      <tr><th>지향</th><td colspan="3">데모로 끝나는 프로토타입이 아니라 <b>매일 쓰는 사용자가 있는 제품</b>을 만들고 운영합니다.</td></tr>
+      <tr><th>이메일</th><td>hihello516@naver.com</td><th>GitHub</th><td>github.com/KANGJIYEON2</td></tr>
+    </table>
+  </div>
+
+  <div class="foot">
+    <span>본 문서는 강지연 포트폴리오의 인쇄용(요약) 버전입니다 · 전체 인터랙티브 버전 별도 제공.</span>
+    <span class="stamp">team-ieum · 강지연 ◉</span>
+  </div>
+
+</div>
+</body>
+</html>

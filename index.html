@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>강지연 · World Tour 1-2026 🍄</title>
+<meta name="description" content="강지연 · Product Engineer · 세무·회계 5년 → 풀스택 + AI · 6개 서비스 단독 개발 · Super Mario World Tour portfolio">
+<meta property="og:title" content="강지연 · Kang Jiyeon · World Tour Portfolio">
+<meta property="og:description" content="세무·회계 5년 경력의 도메인 특화 엔지니어. 6개 프로덕트를 기획부터 배포까지 단독 개발.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=DotGothic16&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* ━━ Mario palette ━━ */
+    --mario-r: #E40000;
+    --mario-r-dk: #A00000;
+    --mario-b: #0073FA;
+    --coin: #FBC700;
+    --coin-dk: #B07000;
+    --coin-lt: #FFE680;
+    --brick: #C84C0C;
+    --brick-dk: #8B3000;
+    --pipe: #00A800;
+    --pipe-dk: #007800;
+    --pipe-lt: #4DD449;
+    --skin: #FFAA88;
+    --ground: #E29A3A;
+    --ground-dk: #8B3000;
+
+    /* ━━ KAWAII PALETTE ━━ */
+    --peach: #FFB6D9;
+    --peach-dk: #FF7DB8;
+    --peach-pale: #FFE5F0;
+    --baby-blue: #C5E0FA;
+    --mint: #C5F0DC;
+    --kawaii-yellow: #FFE680;
+
+    /* ━━ World themes ━━ */
+    --grass-sky-top: #5C94FC;
+    --grass-sky-bot: #ADCEFF;
+    --grass-ground: #00A800;
+    --grass-hill-dk: #008000;
+    --grass-hill-lt: #4DD449;
+
+    --sky-top: #ADCEFF;
+    --sky-bot: #DCE9FF;
+    --cloud: #FFFFFF;
+    --cloud-sh: #B2D3FF;
+
+    --pipe-bg-top: #A4E869;
+    --pipe-bg-bot: #4DD449;
+    --pipe-deco: #2D8B2D;
+
+    --castle-bg-top: #4A1F00;
+    --castle-bg-bot: #2A0F00;
+    --castle-stone: #808080;
+    --castle-stone-dk: #404040;
+    --lava: #FF6B00;
+    --lava-bright: #FFC700;
+
+    --ink: #1A1A1A;
+    --ink-2: #3D3D3D;
+    --ink-3: #6B6B6B;
+    --paper: #FFFAF0;
+    --paper-2: #FFF6E0;
+
+    --f-pixel: 'Press Start 2P', monospace;
+    --f-mono: 'VT323', 'JetBrains Mono', monospace;
+    --f-body: 'Inter', system-ui, sans-serif;
+    --f-kr: 'Pretendard', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--grass-sky-top);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  svg { shape-rendering: crispEdges; }
+
+  ::selection { background: var(--coin); color: var(--ink); }
+
+  /* ━━━━━━━━━━ CLASSIC SMB GROUND STRIP ━━━━━━━━━━ */
+  .smb-ground {
+    height: 46px;
+    border-top: 4px solid #000;
+    background-color: var(--ground);
+    background-image:
+      repeating-linear-gradient(90deg, transparent 0 42px, rgba(0,0,0,.45) 42px 46px),
+      repeating-linear-gradient(180deg,
+        rgba(255,255,255,.30) 0 5px,
+        transparent 5px 22px,
+        rgba(0,0,0,.30) 22px 26px,
+        transparent 26px 46px);
+    background-size: 46px 46px;
+    position: relative;
+    z-index: 6;
+  }
+
+  /* ━━━━━━━━━━ STICKY HUD (top bar) ━━━━━━━━━━ */
+  .hud {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: #000;
+    color: #FFF;
+    padding: 8px 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto auto;
+    gap: 24px;
+    align-items: center;
+    font-family: var(--f-pixel);
+    font-size: 8px;
+    letter-spacing: 0.04em;
+    border-bottom: 3px solid var(--coin);
+    box-shadow: 0 2px 0 #000, 0 4px 12px rgba(0,0,0,0.4);
+  }
+  .hud-mario { display: flex; align-items: center; gap: 8px; }
+  .hud-mario svg { width: 24px; height: 24px; }
+  .hud-mario .name { color: #FFF; line-height: 1.2; }
+  .hud-mario .name .small { color: var(--coin); font-size: 7px; display: block; margin-bottom: 2px; }
+  .hud-nav { display: flex; gap: 14px; justify-self: center; }
+  .hud-nav a {
+    color: #FFF; text-decoration: none;
+    padding: 4px 8px; border: 2px solid transparent;
+    transition: all 0.15s; font-size: 8px; letter-spacing: 0.06em;
+  }
+  .hud-nav a:hover { background: var(--coin); color: var(--ink); border-color: #000; }
+  .hud-counter { display: flex; align-items: center; gap: 6px; color: var(--coin); }
+  .hud-counter svg { width: 16px; height: 16px; }
+  .hud-counter .count {
+    font-family: var(--f-mono); font-size: 14px; line-height: 1;
+    min-width: 26px; text-align: right; color: #FFF;
+  }
+  .hud-counter .max { color: var(--coin); }
+  .hud-world { color: var(--coin); font-size: 8px; }
+
+  /* ━━━━━━━━━━ WORLD SECTIONS ━━━━━━━━━━ */
+  .world { padding: 100px 24px 0; position: relative; overflow: hidden; }
+  .world > .smb-ground { margin: 80px -24px 0; }
+  .container { max-width: 1100px; margin: 0 auto; position: relative; }
+  .section-label { text-align: center; margin-bottom: 40px; }
+  .section-label .world-num {
+    display: inline-block; font-family: var(--f-pixel); font-size: 11px;
+    background: #000; color: var(--coin); padding: 8px 14px;
+    border: 3px solid var(--coin); letter-spacing: 0.1em;
+    box-shadow: 4px 4px 0 #000; margin-bottom: 16px;
+  }
+  .section-label h2 {
+    font-family: var(--f-pixel); font-size: 28px; color: #FFF;
+    letter-spacing: 0.04em; line-height: 1.2; margin-bottom: 12px;
+    text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  }
+  .section-label .kr {
+    font-family: var(--f-kr); font-weight: 700; color: var(--coin);
+    font-size: 14px; letter-spacing: 0.04em; text-shadow: 2px 2px 0 #000;
+  }
+
+  /* ━━━━━━━━━━ SECTION 1 · TITLE SCREEN ━━━━━━━━━━ */
+  .title-screen {
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--grass-sky-top) 0%, var(--grass-sky-bot) 70%, var(--grass-hill-lt) 70%, var(--grass-ground) 100%);
+    padding: 120px 24px 0;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    position: relative;
+  }
+  .title-clouds { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .floating-cloud { position: absolute; animation: float 18s ease-in-out infinite; }
+  .floating-cloud.c1 { top: 14%; left: 8%; width: 80px; animation-delay: 0s; }
+  .floating-cloud.c2 { top: 22%; right: 12%; width: 100px; animation-delay: 2s; }
+  .floating-cloud.c3 { top: 42%; left: 18%; width: 70px; animation-delay: 4s; }
+  .floating-cloud.c4 { top: 8%; right: 28%; width: 60px; animation-delay: 6s; }
+
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  @keyframes pop-in { 0% { opacity: 0; transform: translateY(14px); } 100% { opacity: 1; transform: translateY(0); } }
+  @keyframes mario-leap { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes celebrate { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+  @keyframes icon-flip { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes walk { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+  @keyframes blink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0.3; } }
+  @keyframes bounce-down { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  @keyframes sparkle-anim { 0%,100% { opacity: 0.4; transform: scale(0.8) rotate(0deg); } 50% { opacity: 1; transform: scale(1.2) rotate(180deg); } }
+
+  .pop-in-prep { opacity: 0; transform: translateY(14px); }
+  .pop-in-active { animation: pop-in 0.55s ease-out both; }
+  .title-hero { animation: pop-in 0.65s ease-out 0.1s both; }
+  .title-stats .stat:nth-child(1) { animation: pop-in 0.45s ease-out 0.5s both; }
+  .title-stats .stat:nth-child(2) { animation: pop-in 0.45s ease-out 0.62s both; }
+  .title-stats .stat:nth-child(3) { animation: pop-in 0.45s ease-out 0.74s both; }
+  .title-stats .stat:nth-child(4) { animation: pop-in 0.45s ease-out 0.86s both; }
+  .project-card:hover .p-icon { animation: icon-flip 0.55s ease-out; }
+  .castle-contact.pop-in-active .cc-banner { animation: celebrate 0.8s ease-in-out 0.4s; }
+  .hud-counter .count.popped { animation: celebrate 0.4s ease-out; color: var(--coin) !important; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  .sparkle {
+    display: inline-block; color: var(--peach-dk);
+    text-shadow: 0 0 6px var(--peach), 0 0 12px var(--kawaii-yellow);
+    font-size: 1.1em; vertical-align: -1px; margin: 0 4px;
+    animation: sparkle-anim 2.4s ease-in-out infinite;
+  }
+  .sparkle:nth-of-type(2) { animation-delay: 0.4s; }
+  .sparkle:nth-of-type(3) { animation-delay: 0.8s; }
+  .heart-pulse { display: inline-block; width: 16px; height: 16px; vertical-align: -3px; }
+
+  .walking-duo { display: flex; gap: 14px; align-items: flex-end; margin-top: 30px; z-index: 2; }
+  .walking-duo svg { width: 56px; height: 56px; animation: walk 1.5s steps(2) infinite; }
+  .walking-duo svg:nth-child(2) { animation-delay: 0.4s; }
+
+  .deco-heart { position: absolute; pointer-events: none; width: 22px; height: 22px; z-index: 1; opacity: 0.85; animation: float 5s ease-in-out infinite; }
+  .deco-heart.h1 { top: 18%; right: 14%; animation-delay: 0s; }
+  .deco-heart.h2 { top: 56%; left: 10%; animation-delay: 1.5s; }
+  .deco-toad { position: absolute; width: 60px; height: 60px; animation: float 3.5s ease-in-out infinite; z-index: 2; pointer-events: none; }
+
+  .title-hero {
+    background: var(--paper); border: 4px solid #000; border-radius: 14px;
+    box-shadow: 6px 6px 0 var(--peach-dk), 6px 6px 0 4px #000;
+    padding: 50px 40px 36px; max-width: 800px; width: 100%;
+    position: relative; z-index: 2; margin-bottom: 40px;
+  }
+  .title-corner { position: absolute; width: 32px; height: 32px; animation: float 4s ease-in-out infinite; }
+  .title-corner.tl { top: -16px; left: -16px; }
+  .title-corner.tr { top: -16px; right: -16px; animation-delay: 0.5s; }
+  .title-corner.bl { bottom: -16px; left: -16px; animation-delay: 1s; }
+  .title-corner.br { bottom: -16px; right: -16px; animation-delay: 1.5s; }
+  .title-corner svg { width: 100%; height: 100%; }
+
+  .title-press {
+    font-family: var(--f-pixel); font-size: 11px; color: var(--mario-r);
+    text-align: center; letter-spacing: 0.16em; margin-bottom: 20px;
+  }
+  .title-name { text-align: center; margin-bottom: 8px; }
+  .title-name .kr { font-family: var(--f-kr); font-size: 64px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1; }
+  .title-name .en { display: block; font-family: var(--f-pixel); font-size: 18px; color: var(--mario-r); letter-spacing: 0.06em; margin-top: 8px; }
+  .title-role {
+    text-align: center; font-family: var(--f-pixel); font-size: 9px; color: var(--ink-2);
+    letter-spacing: 0.04em; line-height: 1.6; margin: 24px 0; padding: 16px 0;
+    border-top: 3px dashed #000; border-bottom: 3px dashed #000;
+  }
+  .title-role .live { background: var(--coin); color: var(--ink); padding: 3px 8px; border: 2px solid #000; display: inline-block; margin: 0 4px; }
+  .title-tagline { text-align: center; font-family: var(--f-body); font-size: 16px; color: var(--ink); line-height: 1.5; margin-bottom: 14px; font-weight: 500; }
+  .title-tagline b { background: var(--coin); padding: 0 6px; border: 1.5px solid #000; font-weight: 700; }
+  .title-tagline-kr { text-align: center; font-family: var(--f-kr); font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+  .title-tagline-kr b { color: var(--ink); font-weight: 700; }
+
+  .title-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 28px; }
+  .stat {
+    background: var(--coin); border: 3px solid #000; border-radius: 10px;
+    padding: 14px 6px; text-align: center; box-shadow: 3px 3px 0 #000;
+    transition: transform 0.2s; cursor: default;
+  }
+  .stat:hover { transform: translate(-2px, -3px); box-shadow: 5px 5px 0 #000; }
+  .stat.red { background: var(--mario-r); color: #FFF; }
+  .stat.green { background: var(--pipe); color: #FFF; }
+  .stat.blue { background: var(--mario-b); color: #FFF; }
+  .stat .v { font-family: var(--f-pixel); font-size: 18px; line-height: 1; color: var(--ink); margin-bottom: 6px; }
+  .stat.red .v, .stat.green .v, .stat.blue .v { color: #FFF; }
+  .stat .l { font-family: var(--f-pixel); font-size: 6px; color: var(--brick-dk); letter-spacing: 0.06em; line-height: 1.4; }
+  .stat.red .l, .stat.green .l, .stat.blue .l { color: rgba(255,255,255,0.85); }
+
+  .title-scroll-hint {
+    margin-top: 30px; text-align: center; font-family: var(--f-pixel); font-size: 9px;
+    color: #FFF; text-shadow: 2px 2px 0 #000; animation: bounce-down 1.5s ease-in-out infinite;
+  }
+
+  /* ━━━━━━━━━━ WORLD 1 · GRASS LAND (About) ━━━━━━━━━━ */
+  .grass-land {
+    background: linear-gradient(180deg, var(--grass-sky-top) 0%, var(--grass-sky-bot) 60%, var(--grass-hill-lt) 60%, var(--grass-ground) 100%);
+    padding-top: 120px; border-top: 6px solid #000;
+  }
+  .grass-land .floating-cloud { animation-duration: 16s; }
+  .grass-land .section-label h2 { color: #FFF; }
+
+  .hill {
+    position: absolute; bottom: 0; width: 200px; height: 100px;
+    background: var(--grass-hill-dk); border: 4px solid #000; border-bottom: none;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0; z-index: 1; opacity: 0.5;
+  }
+  .hill.h1 { left: -50px; bottom: 46px; width: 280px; height: 140px; }
+  .hill.h2 { right: 5%; bottom: 46px; width: 240px; height: 120px; opacity: 0.6; }
+
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; position: relative; z-index: 5; }
+  .prose-card {
+    background: var(--paper); border: 3px solid #000; border-radius: 12px;
+    box-shadow: 5px 5px 0 var(--peach-dk), 5px 5px 0 3px #000;
+    padding: 32px 36px; font-size: 15px; line-height: 1.65; position: relative;
+  }
+  .prose-card::before {
+    content: 'ABOUT'; position: absolute; top: -12px; left: 24px;
+    background: var(--mario-r); color: #FFF; font-family: var(--f-pixel); font-size: 9px;
+    padding: 5px 10px; border: 2px solid #000; letter-spacing: 0.1em; box-shadow: 2px 2px 0 #000;
+  }
+  .prose-card p { margin-bottom: 16px; }
+  .prose-card p:last-child { margin-bottom: 0; }
+  .prose-card .lead::first-letter {
+    font-family: var(--f-pixel); font-size: 48px; float: left; line-height: 0.85;
+    margin: 6px 12px 4px 0; color: var(--mario-r); background: var(--coin); padding: 8px 12px; border: 3px solid #000;
+  }
+  .prose-card b { background: var(--coin); padding: 1px 5px; border: 1.5px solid #000; font-weight: 700; }
+  .prose-card em { color: var(--mario-r); font-weight: 700; font-style: normal; border-bottom: 3px dashed var(--mario-r); }
+  .prose-rule { border: none; height: 6px; background-image: linear-gradient(90deg, var(--coin) 50%, transparent 50%); background-size: 14px 6px; margin: 24px 0; }
+  .prose-card .kr { font-family: var(--f-kr); font-size: 14px; line-height: 1.75; color: var(--ink-2); }
+  .prose-card .kr b { color: var(--ink); font-weight: 800; }
+  .prose-card .kr em { color: var(--mario-r); font-weight: 800; border-bottom: 3px dashed var(--mario-r); }
+
+  .about-side { display: flex; flex-direction: column; gap: 24px; }
+  .talking-flower {
+    background: var(--coin); border: 3px solid #000; border-radius: 16px; padding: 24px;
+    box-shadow: 5px 5px 0 var(--peach-dk), 5px 5px 0 3px #000; position: relative;
+  }
+  .talking-flower::before {
+    content: '★'; position: absolute; top: -18px; right: -12px; width: 36px; height: 36px;
+    background: var(--mario-r); color: #FFF; border: 3px solid #000; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 2px 2px 0 #000;
+  }
+  .flower-icon { width: 40px; height: 40px; margin: 0 auto 12px; display: block; }
+  .quote-text { font-family: var(--f-body); font-size: 16px; font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 12px; }
+  .quote-text em { color: var(--mario-r); font-style: normal; font-weight: 800; }
+  .quote-attr { font-family: var(--f-pixel); font-size: 8px; color: var(--brick-dk); letter-spacing: 0.08em; }
+
+  .powerups-card {
+    background: var(--paper); border: 3px solid #000; border-radius: 12px; padding: 24px;
+    box-shadow: 5px 5px 0 var(--peach-dk), 5px 5px 0 3px #000;
+  }
+  .powerups-title {
+    font-family: var(--f-pixel); font-size: 9px; color: #FFF; background: var(--pipe);
+    padding: 6px 10px 5px; margin-bottom: 18px; display: inline-block; letter-spacing: 0.06em;
+    border: 2px solid #000; box-shadow: 2px 2px 0 #000;
+  }
+  .powerup-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 2px dotted var(--ink-3); }
+  .powerup-item:last-child { border-bottom: none; }
+  .powerup-icon { width: 32px; height: 32px; flex: none; }
+  .powerup-body { flex: 1; }
+  .powerup-name { font-family: var(--f-pixel); font-size: 9px; color: var(--ink); margin-bottom: 4px; letter-spacing: 0.04em; }
+  .powerup-desc { font-family: var(--f-kr); font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+
+  .skills-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px; position: relative; z-index: 5; }
+  .skill-card {
+    background: var(--paper-2); border: 3px solid #000; border-radius: 10px;
+    box-shadow: 4px 4px 0 var(--peach-dk), 4px 4px 0 3px #000; padding: 20px 24px;
+  }
+  .skill-label {
+    font-family: var(--f-pixel); font-size: 9px; color: #FFF; background: var(--ink);
+    padding: 5px 10px 4px; display: inline-block; margin-bottom: 14px; letter-spacing: 0.06em;
+    border: 2px solid #000; border-radius: 6px;
+  }
+  .skill-label.red { background: var(--mario-r); }
+  .skill-list { list-style: none; }
+  .skill-list li {
+    display: flex; justify-content: space-between; align-items: center; padding: 6px 0;
+    border-bottom: 1.5px dotted var(--ink-3); font-family: var(--f-body); font-size: 14px; color: var(--ink);
+  }
+  .skill-list li:last-child { border-bottom: none; }
+  .skill-list li b { font-weight: 700; }
+  .skill-list .yr { font-family: var(--f-mono); font-size: 18px; color: var(--mario-r); font-weight: 700; line-height: 1; }
+  .skill-list .coin-icon { width: 14px; height: 14px; display: inline-block; vertical-align: -2px; margin-right: 6px; }
+
+  /* ━━━━━━━━━━ WORLD 2 · SKY LAND (Finance projects) ━━━━━━━━━━ */
+  .sky-land {
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bot) 100%);
+    padding-top: 120px; border-top: 6px solid #000;
+  }
+  .sky-land .floating-cloud { animation-duration: 14s; }
+  .sky-land .section-label h2 { color: var(--ink); text-shadow: 4px 4px 0 var(--coin), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+  .sky-land .section-label .kr { color: var(--ink); text-shadow: none; background: var(--coin); padding: 4px 10px; border: 2px solid #000; }
+
+  .project-grid { display: grid; grid-template-columns: 1fr; gap: 36px; position: relative; z-index: 5; }
+  .project-card {
+    background: var(--paper); border: 4px solid #000; border-radius: 14px;
+    box-shadow: 6px 6px 0 var(--peach-dk), 6px 6px 0 4px #000;
+    padding: 28px 32px; position: relative; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .project-card:hover {
+    transform: translate(-3px, -5px);
+    box-shadow: 9px 9px 0 var(--peach-dk), 9px 9px 0 4px #000;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: -5px; left: 50px; right: 50px; height: 8px;
+    background: var(--coin); border-bottom: 3px solid #000;
+  }
+  .project-card.red::before { background: var(--mario-r); }
+  .project-card.pipe::before { background: var(--pipe); }
+  .project-card.brick::before { background: var(--brick); }
+  .project-card.blue::before { background: var(--mario-b); }
+
+  .p-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; padding-bottom: 18px; border-bottom: 3px dashed #000; margin-bottom: 18px; }
+  .p-head-l { display: flex; align-items: center; gap: 16px; flex: 1; min-width: 0; }
+  .p-icon { width: 56px; height: 56px; flex: none; cursor: pointer; transition: transform 0.15s; }
+  .p-icon:hover { transform: translateY(-3px); }
+  .p-titles { flex: 1; min-width: 0; }
+  .p-stage { font-family: var(--f-pixel); font-size: 8px; color: var(--ink-3); letter-spacing: 0.08em; margin-bottom: 6px; }
+  .p-name { font-family: var(--f-pixel); font-size: 17px; color: var(--ink); letter-spacing: 0.03em; line-height: 1.1; margin-bottom: 4px; }
+  .p-name-kr { font-family: var(--f-kr); font-size: 13px; color: var(--ink-2); font-weight: 600; }
+  .p-meta { text-align: right; flex: none; }
+  .p-cat {
+    font-family: var(--f-pixel); font-size: 8px; color: #FFF; background: var(--mario-r);
+    padding: 5px 8px 4px; border: 2px solid #000; letter-spacing: 0.04em; display: inline-block; box-shadow: 2px 2px 0 #000;
+  }
+  .p-cat.coin { background: var(--coin); color: var(--ink); }
+  .p-cat.pipe { background: var(--pipe); }
+  .p-cat.brick { background: var(--brick); }
+  .p-cat.blue { background: var(--mario-b); }
+  .p-year { font-family: var(--f-mono); font-size: 18px; color: var(--ink-2); margin-top: 8px; line-height: 1; display: block; }
+
+  .p-body { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; }
+  .p-thesis { font-family: var(--f-body); font-size: 15px; font-weight: 600; color: var(--mario-r); line-height: 1.45; margin-bottom: 14px; font-style: italic; }
+  .p-thesis .em { background: var(--coin); color: var(--ink); padding: 0 6px; border: 1.5px solid #000; font-style: normal; font-weight: 800; }
+  .p-desc { font-family: var(--f-body); font-size: 14px; line-height: 1.6; color: var(--ink); margin-bottom: 12px; }
+  .p-desc b { font-weight: 700; background: var(--coin); padding: 0 4px; border: 1px solid #000; }
+  .p-desc-kr { font-family: var(--f-kr); font-size: 13px; line-height: 1.65; color: var(--ink-2); }
+  .p-desc-kr b { color: var(--ink); font-weight: 800; background: var(--coin); padding: 0 4px; border: 1px solid #000; }
+
+  .p-right { padding-left: 20px; border-left: 3px dashed var(--ink); }
+  .p-coins-label { font-family: var(--f-pixel); font-size: 8px; color: var(--brick-dk); letter-spacing: 0.06em; margin-bottom: 12px; }
+  .p-coins { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .p-coin { display: flex; align-items: center; gap: 8px; }
+  .p-coin-icon { width: 24px; height: 24px; flex: none; }
+  .p-coin-num { font-family: var(--f-pixel); font-size: 13px; color: var(--ink); display: block; margin-bottom: 2px; line-height: 1; }
+  .p-coin-label { font-family: var(--f-pixel); font-size: 7px; color: var(--ink-3); letter-spacing: 0.04em; }
+  .p-stack { padding-top: 12px; border-top: 2px dashed var(--ink); font-family: var(--f-mono); font-size: 16px; line-height: 1.4; color: var(--ink-2); }
+  .p-stack-label { font-family: var(--f-pixel); font-size: 7px; color: var(--pipe-dk); letter-spacing: 0.06em; margin-bottom: 6px; display: block; }
+  .p-stack b { color: var(--ink); font-weight: 700; }
+
+  .p-demo {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--f-pixel); font-size: 7px; color: #fff;
+    background: var(--mario-r); border: 2px solid var(--ink);
+    border-radius: 4px; padding: 5px 7px; margin-left: 8px;
+    box-shadow: 2px 2px 0 var(--ink); white-space: nowrap;
+  }
+
+  /* ━━━━━━━━━━ WORLD 3 · PIPE LAND (AI Platform projects) ━━━━━━━━━━ */
+  .pipe-land {
+    background: linear-gradient(180deg, var(--pipe-bg-top) 0%, #73D649 55%, var(--pipe-bg-bot) 100%);
+    padding-top: 120px; border-top: 6px solid #000;
+  }
+  .pipe-land .section-label h2 {
+    color: #FFF; text-shadow: 3px 3px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+  }
+  .deco-pipe { position: absolute; width: 72px; height: 116px; z-index: 1; opacity: 0.95; filter: drop-shadow(3px 3px 0 rgba(0,0,0,0.3)); }
+  .deco-pipe.p1 { top: 12%; left: 2%; }
+  .deco-pipe.p2 { top: 55%; right: 2%; }
+  .deco-pipe.p3 { bottom: 8%; left: 4%; }
+
+  /* ━━━━━━━━━━ WORLD 4 · CASTLE (Currently + Contact) ━━━━━━━━━━ */
+  .castle-world {
+    background: linear-gradient(180deg, #7A3500 0%, var(--castle-bg-top) 30%, var(--castle-bg-bot) 80%, #1A0800 100%);
+    padding-top: 120px; padding-bottom: 80px; border-top: 6px solid #000; color: #FFF; position: relative;
+  }
+  .castle-world .section-label h2 { color: var(--lava-bright); text-shadow: 3px 3px 0 #000; }
+  .castle-world .section-label .kr { color: #FFF; background: var(--mario-r); padding: 4px 10px; border: 2px solid #000; }
+  .castle-world .section-label .world-num { background: var(--mario-r); color: #FFF; border-color: var(--coin); }
+
+  .castle-scene { display: flex; justify-content: center; align-items: flex-end; gap: 50px; margin-bottom: 44px; position: relative; z-index: 5; }
+  .castle-scene svg.flag { width: 50px; height: 150px; }
+  .castle-scene svg.castle { width: 130px; height: 130px; }
+
+  .lava-strip {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 30px;
+    background: linear-gradient(180deg, var(--lava) 0%, var(--lava-bright) 100%);
+    border-top: 4px solid #000; pointer-events: none;
+  }
+  .lava-strip::before {
+    content: ''; position: absolute; top: -8px; left: 0; right: 0; height: 8px;
+    background-image:
+      radial-gradient(circle at 25% 100%, var(--lava) 8px, transparent 9px),
+      radial-gradient(circle at 75% 100%, var(--lava) 8px, transparent 9px);
+    background-size: 60px 8px, 60px 8px;
+  }
+
+  .now-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 50px; }
+  .now-card {
+    background: var(--paper); border: 3px solid #000; border-radius: 12px;
+    box-shadow: 4px 4px 0 var(--peach-dk), 4px 4px 0 3px #000;
+    padding: 20px; display: flex; gap: 14px; align-items: flex-start;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .now-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--peach-dk), 6px 6px 0 3px #000; }
+  .now-icon { width: 48px; height: 48px; flex: none; }
+  .now-body { flex: 1; }
+  .now-cat { font-family: var(--f-pixel); font-size: 9px; color: var(--mario-r); margin-bottom: 6px; letter-spacing: 0.08em; }
+  .now-title { font-family: var(--f-pixel); font-size: 12px; color: var(--ink); line-height: 1.2; margin-bottom: 8px; letter-spacing: 0.02em; }
+  .now-desc { font-family: var(--f-kr); font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+  .now-desc b { color: var(--ink); font-weight: 800; }
+
+  .castle-contact {
+    background: var(--mario-r); border: 4px solid #000; border-radius: 18px;
+    box-shadow: 8px 8px 0 var(--peach-dk), 8px 8px 0 4px #000;
+    padding: 40px 36px 32px; text-align: center; position: relative; overflow: hidden;
+  }
+  .castle-contact::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%;
+    background: radial-gradient(circle at 20% 100%, rgba(0,0,0,0.2) 30%, transparent 60%), radial-gradient(circle at 80% 100%, rgba(0,0,0,0.2) 30%, transparent 60%);
+    pointer-events: none;
+  }
+  .cc-banner { font-family: var(--f-pixel); font-size: 22px; color: var(--coin); margin-bottom: 12px; letter-spacing: 0.06em; text-shadow: 3px 3px 0 #000; position: relative; }
+  .cc-sub { font-family: var(--f-pixel); font-size: 10px; color: #FFF; margin-bottom: 20px; letter-spacing: 0.06em; position: relative; }
+  .cc-kr { font-family: var(--f-kr); font-size: 14px; color: #FFF; font-weight: 600; margin-bottom: 28px; line-height: 1.5; position: relative; }
+  .cc-contacts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; position: relative; }
+  .cc-contact {
+    background: var(--paper); color: var(--ink); border: 3px solid #000; border-radius: 10px;
+    padding: 16px 20px; display: flex; flex-direction: column; gap: 4px; text-decoration: none; transition: transform 0.15s;
+  }
+  .cc-contact:hover { transform: translate(-2px, -2px); background: var(--coin); }
+  .cc-contact .lbl { font-family: var(--f-pixel); font-size: 8px; color: var(--mario-r); letter-spacing: 0.12em; }
+  .cc-contact .val { font-family: var(--f-mono); font-size: 18px; color: var(--ink); line-height: 1.2; word-break: break-all; }
+
+  /* ━━━━━━━━━━ FOOTER ━━━━━━━━━━ */
+  footer {
+    background: #000; color: var(--coin); padding: 32px 24px; text-align: center;
+    font-family: var(--f-pixel); font-size: 9px; letter-spacing: 0.06em; line-height: 1.8; border-top: 4px solid var(--coin);
+  }
+  footer .game { color: #FFF; margin-bottom: 8px; }
+  footer .made { color: var(--coin); margin-bottom: 12px; }
+  footer .copy { color: #888; font-size: 8px; }
+
+  .hud { transform: translateY(-100%); transition: transform 0.3s ease; }
+  body.scrolled .hud { transform: translateY(0); }
+
+  /* ━━━━━━━━━━ RESPONSIVE ━━━━━━━━━━ */
+  @media (max-width: 900px) {
+    .hud { padding: 6px 12px; gap: 8px; grid-template-columns: auto 1fr auto; font-size: 7px; }
+    .hud-mario .name { font-size: 8px; }
+    .hud-mario .name .small { font-size: 6px; }
+    .hud-nav { display: none; }
+    .hud-world { display: none; }
+    .hud-counter .count { font-size: 11px; }
+
+    .world { padding: 80px 16px 0; }
+    .world > .smb-ground { margin: 60px -16px 0; }
+    .title-screen { padding-top: 100px; }
+
+    .title-hero { padding: 36px 24px 24px; }
+    .title-name .kr { font-size: 44px; }
+    .title-name .en { font-size: 14px; }
+    .title-role { font-size: 8px; }
+    .title-tagline { font-size: 14px; }
+    .title-tagline-kr { font-size: 13px; }
+    .title-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+    .section-label h2 { font-size: 20px; }
+    .section-label .kr { font-size: 12px; }
+
+    .about-grid { grid-template-columns: 1fr; gap: 20px; }
+    .skills-row { grid-template-columns: 1fr; gap: 14px; }
+
+    .prose-card { padding: 28px 22px; font-size: 14px; }
+    .prose-card .lead::first-letter { font-size: 36px; padding: 6px 10px; }
+
+    .project-card { padding: 22px 20px; }
+    .project-card::before { left: 20px; right: 20px; }
+    .p-head { gap: 12px; flex-direction: column; align-items: flex-start; }
+    .p-meta { text-align: left; }
+    .p-name { font-size: 14px; }
+    .p-name-kr { font-size: 12px; }
+    .p-body { grid-template-columns: 1fr; gap: 16px; }
+    .p-right { padding-left: 0; border-left: none; border-top: 3px dashed var(--ink); padding-top: 16px; }
+
+    .castle-scene { gap: 24px; }
+    .castle-scene svg.flag { width: 36px; height: 110px; }
+    .castle-scene svg.castle { width: 96px; height: 96px; }
+
+    .now-grid { grid-template-columns: 1fr; gap: 12px; }
+    .now-card { padding: 16px; }
+    .now-icon { width: 36px; height: 36px; }
+    .now-title { font-size: 11px; }
+    .now-desc { font-size: 12px; }
+
+    .castle-contact { padding: 28px 20px 24px; }
+    .cc-banner { font-size: 16px; }
+    .cc-sub { font-size: 8px; }
+    .cc-kr { font-size: 13px; }
+    .cc-contacts { grid-template-columns: 1fr; gap: 8px; }
+    .cc-contact { padding: 12px 16px; }
+    .cc-contact .val { font-size: 14px; }
+  }
+  @media (max-width: 480px) {
+    .hud-mario svg { width: 18px; height: 18px; }
+    .title-name .kr { font-size: 36px; }
+    .floating-cloud { display: none; }
+  }
+
+  /* ━━━━━━━━━━ PROJECT DETAIL MODAL ━━━━━━━━━━ */
+  .pm-overlay {
+    position: fixed; inset: 0; z-index: 9999; background: rgba(26,26,26,.82);
+    display: none; align-items: flex-start; justify-content: center; padding: 36px 16px; overflow-y: auto;
+  }
+  .pm-overlay.open { display: flex; animation: pmFade .15s; }
+  @keyframes pmFade { from { opacity: 0; } to { opacity: 1; } }
+  .pm-modal {
+    background: var(--paper); border: 5px solid var(--ink); border-radius: 10px;
+    box-shadow: 0 0 0 5px var(--paper), 0 0 0 10px var(--ink), 14px 14px 0 var(--peach-dk);
+    max-width: 720px; width: 100%; margin: auto; animation: pmPop .2s ease-out;
+  }
+  @keyframes pmPop { from { transform: scale(.9); } to { transform: scale(1); } }
+  .pm-head {
+    background: var(--mario-r); border-bottom: 5px solid var(--ink); border-radius: 5px 5px 0 0;
+    padding: 16px 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  }
+  .pm-head-l { min-width: 0; }
+  .pm-stage { font-family: var(--f-pixel); font-size: 8px; color: var(--coin-lt); margin-bottom: 8px; }
+  .pm-title { font-family: var(--f-pixel); font-size: 15px; color: #fff; text-shadow: 2px 2px 0 var(--mario-r-dk); line-height: 1.4; }
+  .pm-title-kr { font-family: var(--f-kr); font-weight: 700; font-size: 13px; color: #fff; margin-top: 7px; }
+  .pm-close {
+    font-family: var(--f-pixel); font-size: 13px; color: #fff; background: var(--ink);
+    border: 3px solid #fff; border-radius: 6px; width: 40px; height: 40px; cursor: pointer; flex-shrink: 0; line-height: 1;
+  }
+  .pm-close:hover { background: var(--mario-r-dk); }
+  .pm-body { padding: 22px 24px 26px; }
+  .pm-def {
+    font-family: var(--f-kr); font-weight: 700; font-size: 15px; color: var(--ink);
+    background: var(--coin); border: 3px solid var(--ink); border-radius: 6px;
+    padding: 12px 14px; margin-bottom: 18px; line-height: 1.6;
+  }
+  .pm-row { margin-bottom: 16px; }
+  .pm-label {
+    font-family: var(--f-pixel); font-size: 8px; color: #fff; background: var(--pipe-dk);
+    border: 2px solid var(--ink); border-radius: 4px; padding: 5px 8px; display: inline-block; margin-bottom: 9px;
+  }
+  .pm-label.coin-l { background: var(--coin-dk); }
+  .pm-label.brick-l { background: var(--brick); }
+  .pm-label.blue-l { background: var(--mario-b); }
+  .pm-text { font-family: var(--f-kr); font-size: 14px; color: var(--ink-2); line-height: 1.85; }
+  .pm-text .hl { color: var(--mario-r); font-weight: 700; }
+  .pm-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .pm-chip {
+    font-family: var(--f-kr); font-weight: 600; font-size: 12px; color: var(--ink);
+    background: #fff; border: 2px solid var(--ink); border-radius: 5px; padding: 5px 9px; box-shadow: 2px 2px 0 rgba(0,0,0,.15);
+  }
+  .pm-link {
+    display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-pixel); font-size: 9px; color: var(--ink);
+    background: var(--coin); border: 3px solid var(--ink); border-radius: 6px; padding: 12px 16px;
+    text-decoration: none; box-shadow: 3px 3px 0 var(--ink); margin-top: 6px;
+  }
+  .pm-link:hover { background: var(--coin-lt); transform: translateY(-1px); }
+  @media (max-width: 600px) {
+    .pm-title { font-size: 12px; }
+    .pm-body { padding: 18px 16px 22px; }
+  }
+
+  /* ━━━━━━━━━━ READABILITY PASS ━━━━━━━━━━ */
+  /* 픽셀 폰트는 장식(HUD·큰 타이틀·배지)에만. 읽는 영역은 깔끔한 본문 폰트로. */
+  .p-stage, .p-cat, .p-coin-num, .p-coin-label, .p-coins-label,
+  .p-stack, .p-stack-label, .p-demo, .powerup-name, .powerups-title,
+  .now-cat, .now-title, .title-role, .stat .l, .skill-label,
+  .cc-contact .lbl, .cc-sub, .pm-stage, .pm-label, .pm-link, .p-name {
+    font-family: var(--f-kr) !important;
+  }
+  .p-name { font-size: 22px !important; font-weight: 800 !important; letter-spacing: 0 !important; line-height: 1.15 !important; }
+  .p-stage { font-size: 12px !important; font-weight: 700 !important; letter-spacing: 0.01em !important; color: var(--ink-2) !important; }
+  .p-cat { font-size: 11px !important; font-weight: 800 !important; letter-spacing: 0 !important; }
+  .p-coin-num { font-size: 19px !important; font-weight: 800 !important; }
+  .p-coin-label { font-size: 11px !important; font-weight: 600 !important; letter-spacing: 0 !important; }
+  .p-coins-label, .p-stack-label { font-size: 12px !important; font-weight: 800 !important; letter-spacing: 0.01em !important; }
+  .p-stack { font-size: 13.5px !important; line-height: 1.55 !important; }
+  .p-demo { font-size: 10px !important; font-weight: 700 !important; letter-spacing: 0 !important; }
+  .powerup-name { font-size: 13.5px !important; font-weight: 800 !important; letter-spacing: 0 !important; }
+  .powerups-title { font-size: 13px !important; font-weight: 800 !important; }
+  .now-cat { font-size: 12px !important; font-weight: 800 !important; }
+  .now-title { font-size: 16px !important; font-weight: 800 !important; line-height: 1.3 !important; }
+  .title-role { font-size: 13px !important; font-weight: 600 !important; letter-spacing: 0 !important; line-height: 1.8 !important; }
+  .title-role .live { font-weight: 800 !important; }
+  .stat .l { font-size: 10px !important; font-weight: 700 !important; letter-spacing: 0 !important; line-height: 1.45 !important; }
+  .skill-label { font-size: 12px !important; font-weight: 800 !important; }
+  .cc-contact .lbl { font-size: 11px !important; font-weight: 800 !important; }
+  .cc-sub { font-size: 13px !important; font-weight: 700 !important; letter-spacing: 0 !important; }
+  .pm-stage { font-size: 11px !important; font-weight: 700 !important; }
+  .pm-label { font-size: 11px !important; font-weight: 800 !important; }
+  .pm-link { font-size: 13px !important; font-weight: 800 !important; }
+
+  /* 한 줄 훅(thesis)을 또렷하게 — 빨강 이탤릭 대신 진한 본문 + 가벼운 강조 */
+  .p-thesis {
+    font-family: var(--f-kr) !important;
+    font-style: normal !important;
+    color: var(--ink) !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1.5 !important;
+  }
+  .p-thesis .em { background: var(--coin-lt) !important; border: none !important; padding: 1px 4px !important; }
+
+  /* 형광 강조 남용 완화 — 박스/테두리 대신 옅은 하이라이트 */
+  .prose-card b, .title-tagline b, .p-desc-kr b, .now-desc b, .powerup-desc b {
+    background: var(--coin-lt) !important;
+    border: none !important;
+    padding: 0 3px !important;
+  }
+  .prose-card em, .prose-card .kr em { border-bottom-width: 2px !important; }
+</style>
+</head>
+<body>
+
+<!-- ━━━━━━━━━━ PIXEL ART SVG SYMBOLS ━━━━━━━━━━ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="cloud" viewBox="0 0 32 18">
+      <rect x="4" y="6" width="2" height="2" fill="#000"/><rect x="6" y="4" width="6" height="2" fill="#000"/>
+      <rect x="12" y="2" width="2" height="2" fill="#000"/><rect x="14" y="0" width="6" height="2" fill="#000"/>
+      <rect x="20" y="2" width="2" height="2" fill="#000"/><rect x="22" y="4" width="4" height="2" fill="#000"/>
+      <rect x="26" y="6" width="2" height="2" fill="#000"/><rect x="28" y="8" width="2" height="6" fill="#000"/>
+      <rect x="2" y="8" width="2" height="6" fill="#000"/><rect x="0" y="10" width="2" height="4" fill="#000"/>
+      <rect x="2" y="14" width="28" height="2" fill="#000"/><rect x="6" y="6" width="20" height="8" fill="white"/>
+      <rect x="4" y="8" width="24" height="6" fill="white"/><rect x="2" y="10" width="28" height="4" fill="white"/>
+      <rect x="12" y="4" width="8" height="2" fill="white"/><rect x="14" y="2" width="4" height="2" fill="white"/>
+      <rect x="6" y="13" width="20" height="1" fill="#B2D3FF"/>
+    </symbol>
+
+    <symbol id="coin" viewBox="0 0 16 16">
+      <rect x="6" y="0" width="4" height="2" fill="#000"/><rect x="4" y="2" width="2" height="2" fill="#000"/>
+      <rect x="10" y="2" width="2" height="2" fill="#000"/><rect x="2" y="4" width="2" height="8" fill="#000"/>
+      <rect x="12" y="4" width="2" height="8" fill="#000"/><rect x="4" y="12" width="2" height="2" fill="#000"/>
+      <rect x="10" y="12" width="2" height="2" fill="#000"/><rect x="6" y="14" width="4" height="2" fill="#000"/>
+      <rect x="4" y="4" width="8" height="8" fill="#FBC700"/><rect x="6" y="2" width="4" height="2" fill="#FBC700"/>
+      <rect x="6" y="12" width="4" height="2" fill="#FBC700"/><rect x="7" y="4" width="2" height="8" fill="#B07000"/>
+      <rect x="6" y="6" width="1" height="4" fill="#B07000"/><rect x="9" y="6" width="1" height="4" fill="#B07000"/>
+      <rect x="7" y="4" width="2" height="1" fill="#FFE680"/><rect x="7" y="11" width="2" height="1" fill="#FFE680"/>
+    </symbol>
+
+    <symbol id="block" viewBox="0 0 16 16">
+      <rect x="0" y="0" width="16" height="16" fill="#000"/><rect x="1" y="1" width="14" height="14" fill="#FBC700"/>
+      <rect x="2" y="2" width="12" height="1" fill="#FFE680"/><rect x="2" y="2" width="1" height="11" fill="#FFE680"/>
+      <rect x="3" y="13" width="11" height="1" fill="#B07000"/><rect x="13" y="3" width="1" height="11" fill="#B07000"/>
+      <rect x="6" y="4" width="4" height="2" fill="#FFF"/><rect x="5" y="5" width="1" height="1" fill="#FFF"/>
+      <rect x="10" y="5" width="1" height="1" fill="#FFF"/><rect x="9" y="6" width="2" height="2" fill="#FFF"/>
+      <rect x="7" y="8" width="2" height="2" fill="#FFF"/><rect x="7" y="11" width="2" height="2" fill="#FFF"/>
+    </symbol>
+
+    <symbol id="brick" viewBox="0 0 16 16">
+      <rect x="0" y="0" width="16" height="16" fill="#000"/><rect x="1" y="1" width="14" height="14" fill="#C84C0C"/>
+      <rect x="1" y="7" width="14" height="2" fill="#8B3000"/><rect x="4" y="1" width="2" height="6" fill="#8B3000"/>
+      <rect x="10" y="1" width="2" height="6" fill="#8B3000"/><rect x="1" y="9" width="3" height="6" fill="#8B3000"/>
+      <rect x="8" y="9" width="2" height="6" fill="#8B3000"/><rect x="14" y="9" width="1" height="6" fill="#8B3000"/>
+      <rect x="1" y="1" width="3" height="1" fill="#E66835"/><rect x="6" y="1" width="4" height="1" fill="#E66835"/>
+      <rect x="12" y="1" width="2" height="1" fill="#E66835"/>
+    </symbol>
+
+    <symbol id="pipe" viewBox="0 0 24 28">
+      <rect x="0" y="0" width="24" height="6" fill="#000"/><rect x="1" y="1" width="22" height="4" fill="#00A800"/>
+      <rect x="2" y="2" width="2" height="2" fill="#4DD449"/><rect x="20" y="2" width="2" height="2" fill="#007800"/>
+      <rect x="3" y="6" width="18" height="22" fill="#000"/><rect x="4" y="6" width="16" height="22" fill="#00A800"/>
+      <rect x="5" y="6" width="2" height="20" fill="#4DD449"/><rect x="17" y="6" width="2" height="20" fill="#007800"/>
+    </symbol>
+
+    <symbol id="mushroom1up" viewBox="0 0 16 16">
+      <rect x="4" y="0" width="8" height="2" fill="#000"/><rect x="2" y="2" width="2" height="2" fill="#000"/>
+      <rect x="12" y="2" width="2" height="2" fill="#000"/><rect x="0" y="4" width="2" height="4" fill="#000"/>
+      <rect x="14" y="4" width="2" height="4" fill="#000"/><rect x="4" y="2" width="8" height="6" fill="#00A800"/>
+      <rect x="2" y="4" width="2" height="4" fill="#00A800"/><rect x="12" y="4" width="2" height="4" fill="#00A800"/>
+      <rect x="4" y="2" width="2" height="2" fill="#FFF"/><rect x="10" y="2" width="2" height="2" fill="#FFF"/>
+      <rect x="6" y="4" width="2" height="2" fill="#FFF"/><rect x="2" y="8" width="12" height="2" fill="#000"/>
+      <rect x="0" y="10" width="2" height="2" fill="#000"/><rect x="14" y="10" width="2" height="2" fill="#000"/>
+      <rect x="2" y="14" width="12" height="2" fill="#000"/><rect x="0" y="12" width="2" height="2" fill="#000"/>
+      <rect x="14" y="12" width="2" height="2" fill="#000"/><rect x="2" y="10" width="12" height="4" fill="#FFF"/>
+      <rect x="4" y="11" width="2" height="2" fill="#000"/><rect x="10" y="11" width="2" height="2" fill="#000"/>
+    </symbol>
+
+    <symbol id="mushroom" viewBox="0 0 16 16">
+      <rect x="4" y="0" width="8" height="2" fill="#000"/><rect x="2" y="2" width="2" height="2" fill="#000"/>
+      <rect x="12" y="2" width="2" height="2" fill="#000"/><rect x="0" y="4" width="2" height="4" fill="#000"/>
+      <rect x="14" y="4" width="2" height="4" fill="#000"/><rect x="4" y="2" width="8" height="6" fill="#E40000"/>
+      <rect x="2" y="4" width="2" height="4" fill="#E40000"/><rect x="12" y="4" width="2" height="4" fill="#E40000"/>
+      <rect x="4" y="2" width="2" height="2" fill="#FFF"/><rect x="10" y="2" width="2" height="2" fill="#FFF"/>
+      <rect x="6" y="4" width="2" height="2" fill="#FFF"/><rect x="2" y="8" width="12" height="2" fill="#000"/>
+      <rect x="0" y="10" width="2" height="2" fill="#000"/><rect x="14" y="10" width="2" height="2" fill="#000"/>
+      <rect x="2" y="14" width="12" height="2" fill="#000"/><rect x="0" y="12" width="2" height="2" fill="#000"/>
+      <rect x="14" y="12" width="2" height="2" fill="#000"/><rect x="2" y="10" width="12" height="4" fill="#FFE680"/>
+      <rect x="4" y="11" width="2" height="2" fill="#000"/><rect x="10" y="11" width="2" height="2" fill="#000"/>
+    </symbol>
+
+    <symbol id="fireflower" viewBox="0 0 16 16">
+      <rect x="6" y="0" width="4" height="2" fill="#000"/><rect x="4" y="2" width="2" height="2" fill="#000"/>
+      <rect x="10" y="2" width="2" height="2" fill="#000"/><rect x="2" y="4" width="2" height="4" fill="#000"/>
+      <rect x="12" y="4" width="2" height="4" fill="#000"/><rect x="4" y="8" width="2" height="2" fill="#000"/>
+      <rect x="10" y="8" width="2" height="2" fill="#000"/><rect x="6" y="10" width="4" height="2" fill="#000"/>
+      <rect x="6" y="0" width="4" height="2" fill="#E40000"/><rect x="4" y="2" width="8" height="6" fill="#E40000"/>
+      <rect x="4" y="8" width="8" height="2" fill="#E40000"/><rect x="6" y="10" width="4" height="2" fill="#E40000"/>
+      <rect x="6" y="4" width="4" height="2" fill="#FFE680"/><rect x="7" y="5" width="2" height="1" fill="#E40000"/>
+      <rect x="7" y="12" width="2" height="3" fill="#00A800"/><rect x="6" y="13" width="1" height="1" fill="#4DD449"/>
+      <rect x="9" y="13" width="1" height="1" fill="#4DD449"/>
+    </symbol>
+
+    <symbol id="star" viewBox="0 0 16 16">
+      <rect x="7" y="0" width="2" height="2" fill="#000"/><rect x="6" y="2" width="4" height="1" fill="#000"/>
+      <rect x="5" y="3" width="6" height="1" fill="#000"/><rect x="0" y="5" width="16" height="2" fill="#000"/>
+      <rect x="2" y="7" width="12" height="3" fill="#000"/><rect x="3" y="10" width="3" height="2" fill="#000"/>
+      <rect x="10" y="10" width="3" height="2" fill="#000"/><rect x="2" y="12" width="3" height="2" fill="#000"/>
+      <rect x="11" y="12" width="3" height="2" fill="#000"/><rect x="1" y="14" width="4" height="2" fill="#000"/>
+      <rect x="11" y="14" width="4" height="2" fill="#000"/><rect x="7" y="1" width="2" height="2" fill="#FBC700"/>
+      <rect x="6" y="3" width="4" height="1" fill="#FBC700"/><rect x="5" y="4" width="6" height="1" fill="#FBC700"/>
+      <rect x="1" y="5" width="14" height="2" fill="#FBC700"/><rect x="3" y="7" width="10" height="3" fill="#FBC700"/>
+      <rect x="4" y="10" width="2" height="2" fill="#FBC700"/><rect x="10" y="10" width="2" height="2" fill="#FBC700"/>
+      <rect x="3" y="12" width="2" height="2" fill="#FBC700"/><rect x="11" y="12" width="2" height="2" fill="#FBC700"/>
+      <rect x="2" y="14" width="3" height="2" fill="#FBC700"/><rect x="11" y="14" width="3" height="2" fill="#FBC700"/>
+      <rect x="6" y="6" width="1" height="2" fill="#000"/><rect x="9" y="6" width="1" height="2" fill="#000"/>
+    </symbol>
+
+    <symbol id="mario" viewBox="0 0 16 16">
+      <rect x="4" y="0" width="8" height="2" fill="#E40000"/><rect x="3" y="2" width="2" height="2" fill="#E40000"/>
+      <rect x="11" y="2" width="2" height="2" fill="#E40000"/><rect x="3" y="4" width="2" height="1" fill="#5C2B00"/>
+      <rect x="6" y="2" width="4" height="2" fill="#5C2B00"/><rect x="6" y="4" width="2" height="1" fill="#5C2B00"/>
+      <rect x="4" y="3" width="2" height="2" fill="#FFAA88"/><rect x="8" y="3" width="2" height="2" fill="#FFAA88"/>
+      <rect x="5" y="4" width="2" height="1" fill="#000"/><rect x="9" y="4" width="2" height="1" fill="#000"/>
+      <rect x="4" y="5" width="8" height="2" fill="#FFAA88"/><rect x="5" y="5" width="1" height="1" fill="#5C2B00"/>
+      <rect x="9" y="5" width="1" height="1" fill="#5C2B00"/><rect x="4" y="6" width="8" height="1" fill="#5C2B00"/>
+      <rect x="3" y="7" width="10" height="5" fill="#E40000"/><rect x="5" y="7" width="6" height="3" fill="#0073FA"/>
+      <rect x="1" y="8" width="2" height="4" fill="#FFAA88"/><rect x="13" y="8" width="2" height="4" fill="#FFAA88"/>
+      <rect x="3" y="12" width="4" height="2" fill="#0073FA"/><rect x="9" y="12" width="4" height="2" fill="#0073FA"/>
+      <rect x="2" y="14" width="4" height="2" fill="#5C2B00"/><rect x="10" y="14" width="4" height="2" fill="#5C2B00"/>
+    </symbol>
+
+    <symbol id="toad" viewBox="0 0 16 16">
+      <rect x="4" y="0" width="8" height="2" fill="#000"/><rect x="2" y="2" width="2" height="2" fill="#000"/>
+      <rect x="12" y="2" width="2" height="2" fill="#000"/><rect x="0" y="4" width="2" height="4" fill="#000"/>
+      <rect x="14" y="4" width="2" height="4" fill="#000"/><rect x="4" y="2" width="8" height="6" fill="#FFF"/>
+      <rect x="2" y="4" width="2" height="4" fill="#FFF"/><rect x="12" y="4" width="2" height="4" fill="#FFF"/>
+      <rect x="6" y="2" width="2" height="2" fill="#E40000"/><rect x="4" y="4" width="2" height="2" fill="#E40000"/>
+      <rect x="10" y="4" width="2" height="2" fill="#E40000"/><rect x="3" y="8" width="10" height="4" fill="#000"/>
+      <rect x="4" y="8" width="8" height="3" fill="#FFD5B5"/><rect x="5" y="9" width="2" height="2" fill="#000"/>
+      <rect x="9" y="9" width="2" height="2" fill="#000"/><rect x="5" y="9" width="1" height="1" fill="#FFF"/>
+      <rect x="9" y="9" width="1" height="1" fill="#FFF"/><rect x="4" y="10" width="1" height="1" fill="#FFB6D9"/>
+      <rect x="11" y="10" width="1" height="1" fill="#FFB6D9"/><rect x="3" y="12" width="10" height="2" fill="#000"/>
+      <rect x="4" y="12" width="8" height="2" fill="#FFF"/><rect x="3" y="14" width="3" height="2" fill="#000"/>
+      <rect x="10" y="14" width="3" height="2" fill="#000"/><rect x="4" y="14" width="2" height="2" fill="#FFF"/>
+      <rect x="10" y="14" width="2" height="2" fill="#FFF"/>
+    </symbol>
+
+    <symbol id="happystar" viewBox="0 0 16 16">
+      <rect x="7" y="0" width="2" height="2" fill="#000"/><rect x="6" y="2" width="4" height="1" fill="#000"/>
+      <rect x="5" y="3" width="6" height="1" fill="#000"/><rect x="0" y="5" width="16" height="2" fill="#000"/>
+      <rect x="2" y="7" width="12" height="3" fill="#000"/><rect x="3" y="10" width="3" height="2" fill="#000"/>
+      <rect x="10" y="10" width="3" height="2" fill="#000"/><rect x="2" y="12" width="3" height="2" fill="#000"/>
+      <rect x="11" y="12" width="3" height="2" fill="#000"/><rect x="1" y="14" width="4" height="2" fill="#000"/>
+      <rect x="11" y="14" width="4" height="2" fill="#000"/><rect x="7" y="1" width="2" height="2" fill="#FBC700"/>
+      <rect x="6" y="3" width="4" height="1" fill="#FBC700"/><rect x="5" y="4" width="6" height="1" fill="#FBC700"/>
+      <rect x="1" y="5" width="14" height="2" fill="#FBC700"/><rect x="3" y="7" width="10" height="3" fill="#FBC700"/>
+      <rect x="4" y="10" width="2" height="2" fill="#FBC700"/><rect x="10" y="10" width="2" height="2" fill="#FBC700"/>
+      <rect x="3" y="12" width="2" height="2" fill="#FBC700"/><rect x="11" y="12" width="2" height="2" fill="#FBC700"/>
+      <rect x="2" y="14" width="3" height="2" fill="#FBC700"/><rect x="11" y="14" width="3" height="2" fill="#FBC700"/>
+      <rect x="5" y="6" width="2" height="2" fill="#000"/><rect x="9" y="6" width="2" height="2" fill="#000"/>
+      <rect x="5" y="6" width="1" height="1" fill="#FFF"/><rect x="9" y="6" width="1" height="1" fill="#FFF"/>
+      <rect x="7" y="9" width="2" height="1" fill="#000"/><rect x="6" y="8" width="1" height="1" fill="#000"/>
+      <rect x="9" y="8" width="1" height="1" fill="#000"/><rect x="3" y="8" width="1" height="1" fill="#FF7DB8"/>
+      <rect x="12" y="8" width="1" height="1" fill="#FF7DB8"/>
+    </symbol>
+
+    <symbol id="heart" viewBox="0 0 16 16">
+      <rect x="2" y="2" width="4" height="2" fill="#000"/><rect x="10" y="2" width="4" height="2" fill="#000"/>
+      <rect x="1" y="4" width="6" height="2" fill="#000"/><rect x="9" y="4" width="6" height="2" fill="#000"/>
+      <rect x="0" y="6" width="16" height="4" fill="#000"/><rect x="2" y="10" width="12" height="2" fill="#000"/>
+      <rect x="4" y="12" width="8" height="2" fill="#000"/><rect x="6" y="14" width="4" height="1" fill="#000"/>
+      <rect x="3" y="3" width="3" height="1" fill="#FF7DB8"/><rect x="10" y="3" width="3" height="1" fill="#FF7DB8"/>
+      <rect x="2" y="4" width="5" height="2" fill="#FF7DB8"/><rect x="9" y="4" width="5" height="2" fill="#FF7DB8"/>
+      <rect x="1" y="6" width="14" height="4" fill="#FF7DB8"/><rect x="3" y="10" width="10" height="2" fill="#FF7DB8"/>
+      <rect x="5" y="12" width="6" height="2" fill="#FF7DB8"/><rect x="3" y="5" width="2" height="2" fill="#FFB6D9"/>
+      <rect x="2" y="7" width="1" height="2" fill="#FFB6D9"/>
+    </symbol>
+
+    <symbol id="yoshi" viewBox="0 0 16 16">
+      <rect x="4" y="2" width="8" height="2" fill="#000"/><rect x="2" y="4" width="12" height="6" fill="#000"/>
+      <rect x="4" y="10" width="10" height="4" fill="#000"/><rect x="5" y="3" width="6" height="1" fill="#00A800"/>
+      <rect x="3" y="4" width="10" height="6" fill="#00A800"/><rect x="5" y="10" width="8" height="3" fill="#00A800"/>
+      <rect x="5" y="11" width="6" height="2" fill="#FFF"/><rect x="4" y="5" width="3" height="3" fill="#FFF"/>
+      <rect x="9" y="5" width="3" height="3" fill="#FFF"/><rect x="5" y="6" width="1" height="2" fill="#000"/>
+      <rect x="10" y="6" width="1" height="2" fill="#000"/><rect x="12" y="8" width="2" height="1" fill="#E40000"/>
+      <rect x="6" y="9" width="3" height="1" fill="#FF7DB8"/>
+    </symbol>
+
+    <symbol id="flower" viewBox="0 0 16 16">
+      <rect x="6" y="0" width="4" height="2" fill="#000"/><rect x="4" y="2" width="8" height="6" fill="#000"/>
+      <rect x="2" y="4" width="2" height="2" fill="#000"/><rect x="12" y="4" width="2" height="2" fill="#000"/>
+      <rect x="6" y="1" width="4" height="1" fill="#FFE680"/><rect x="5" y="2" width="6" height="5" fill="#FBC700"/>
+      <rect x="3" y="4" width="2" height="2" fill="#FBC700"/><rect x="11" y="4" width="2" height="2" fill="#FBC700"/>
+      <rect x="4" y="3" width="2" height="2" fill="#FFE680"/><rect x="6" y="4" width="2" height="2" fill="#E40000"/>
+      <rect x="7" y="4" width="2" height="2" fill="#E40000"/><rect x="9" y="3" width="1" height="2" fill="#FFE680"/>
+      <rect x="6" y="8" width="4" height="6" fill="#000"/><rect x="7" y="8" width="2" height="6" fill="#00A800"/>
+      <rect x="5" y="10" width="2" height="2" fill="#4DD449"/><rect x="9" y="11" width="2" height="2" fill="#4DD449"/>
+    </symbol>
+
+    <!-- FLAGPOLE -->
+    <symbol id="flag" viewBox="0 0 16 48">
+      <rect x="7" y="0" width="2" height="2" fill="#000"/>
+      <rect x="6" y="2" width="4" height="2" fill="#1A6E1A"/>
+      <rect x="7" y="2" width="2" height="44" fill="#9AA0A6"/>
+      <rect x="8" y="2" width="1" height="44" fill="#6B7075"/>
+      <rect x="2" y="6" width="6" height="6" fill="#00A800"/>
+      <rect x="2" y="6" width="6" height="1" fill="#4DD449"/>
+      <rect x="2" y="11" width="6" height="1" fill="#007800"/>
+      <rect x="4" y="8" width="2" height="2" fill="#FFF"/>
+      <rect x="4" y="44" width="8" height="4" fill="#000"/>
+    </symbol>
+
+    <!-- CASTLE -->
+    <symbol id="castle" viewBox="0 0 32 32">
+      <rect x="2" y="6" width="4" height="4" fill="#000"/><rect x="10" y="6" width="4" height="4" fill="#000"/>
+      <rect x="18" y="6" width="4" height="4" fill="#000"/><rect x="26" y="6" width="4" height="4" fill="#000"/>
+      <rect x="2" y="7" width="4" height="3" fill="#C84C0C"/><rect x="10" y="7" width="4" height="3" fill="#C84C0C"/>
+      <rect x="18" y="7" width="4" height="3" fill="#C84C0C"/><rect x="26" y="7" width="4" height="3" fill="#C84C0C"/>
+      <rect x="2" y="10" width="28" height="22" fill="#000"/>
+      <rect x="3" y="10" width="26" height="21" fill="#C84C0C"/>
+      <rect x="11" y="2" width="10" height="8" fill="#000"/>
+      <rect x="12" y="3" width="8" height="7" fill="#C84C0C"/>
+      <rect x="14" y="4" width="4" height="3" fill="#000"/>
+      <rect x="13" y="18" width="6" height="13" fill="#000"/>
+      <rect x="13" y="18" width="6" height="3" fill="#1A1A1A"/>
+      <rect x="13" y="21" width="6" height="10" fill="#2A2A2A"/>
+      <rect x="5" y="13" width="3" height="3" fill="#8B3000"/><rect x="24" y="13" width="3" height="3" fill="#8B3000"/>
+      <rect x="3" y="20" width="26" height="1" fill="#8B3000"/>
+      <rect x="3" y="25" width="26" height="1" fill="#8B3000"/>
+      <rect x="8" y="21" width="1" height="11" fill="#8B3000"/><rect x="16" y="10" width="1" height="8" fill="#8B3000"/>
+      <rect x="23" y="21" width="1" height="11" fill="#8B3000"/>
+    </symbol>
+  </defs>
+</svg>
+
+
+<!-- ━━━━━━━━━━ STICKY HUD ━━━━━━━━━━ -->
+<nav class="hud" id="hud">
+  <div class="hud-mario">
+    <svg><use href="#mario"/></svg>
+    <div class="name"><span class="small">PLAYER</span><span>강지연</span></div>
+  </div>
+  <div class="hud-nav">
+    <a href="#about">▶ ABOUT</a>
+    <a href="#projects">▶ WORK</a>
+    <a href="#currently">▶ NOW</a>
+    <a href="#contact">▶ TALK</a>
+  </div>
+  <div class="hud-counter">
+    <svg><use href="#star"/></svg>
+    <span class="count" id="starCount">00</span>
+    <span class="max">/06</span>
+  </div>
+  <div class="hud-counter">
+    <svg><use href="#coin"/></svg>
+    <span class="count" id="coinCount">×00</span>
+  </div>
+  <div class="hud-world">WORLD<br>1-2026</div>
+</nav>
+
+
+<!-- ━━━━━━━━━━ SECTION 1 · TITLE SCREEN ━━━━━━━━━━ -->
+<section class="world title-screen" id="top">
+  <div class="title-clouds">
+    <svg class="floating-cloud c1"><use href="#cloud"/></svg>
+    <svg class="floating-cloud c2"><use href="#cloud"/></svg>
+    <svg class="floating-cloud c3"><use href="#cloud"/></svg>
+    <svg class="floating-cloud c4"><use href="#cloud"/></svg>
+    <svg class="deco-heart h1"><use href="#heart"/></svg>
+    <svg class="deco-heart h2"><use href="#heart"/></svg>
+  </div>
+
+  <div class="title-hero">
+    <span class="title-corner tl"><svg><use href="#coin"/></svg></span>
+    <span class="title-corner tr"><svg><use href="#coin"/></svg></span>
+    <span class="title-corner bl"><svg><use href="#coin"/></svg></span>
+    <span class="title-corner br"><svg><use href="#coin"/></svg></span>
+
+    <div class="title-press"><span class="sparkle">✦</span><span class="sparkle">★</span> PRESS START — WORLD 1-2026 <span class="sparkle">★</span><span class="sparkle">✦</span></div>
+
+    <h1 class="title-name">
+      <span class="kr">강지연</span>
+      <span class="en">KANG JIYEON</span>
+    </h1>
+
+    <div class="title-role">
+      PRODUCT ENGINEER &nbsp;·&nbsp; SEOUL, KR &nbsp;·&nbsp;
+      <span class="live">▶ OPEN 2026</span>
+    </div>
+
+    <p class="title-tagline">
+      A developer with a <b>domain-first lens</b> — five years in Korean
+      tax &amp; accounting practice, now shipping tools where business reality meets engineering.
+    </p>
+    <p class="title-tagline-kr">
+      세무·회계 실무 <b>5년</b> → 풀스택 + AI · 자동화. 현장에서 겪은 문제를
+      <b>6개 프로덕트</b>로, 기획부터 배포까지 단독으로 만들었습니다.
+    </p>
+
+    <div class="title-stats">
+      <div class="stat"><div class="v">5Y</div><div class="l">TAX·ACCT<br>DOMAIN</div></div>
+      <div class="stat red"><div class="v">06</div><div class="l">SHIPPED<br>PRODUCTS</div></div>
+      <div class="stat green"><div class="v">100%</div><div class="l">SOLO<br>BUILT</div></div>
+      <div class="stat blue"><div class="v">6</div><div class="l">LIVE<br>SERVICES</div></div>
+    </div>
+  </div>
+
+  <div class="walking-duo">
+    <svg><use href="#mario"/></svg>
+    <svg><use href="#toad"/></svg>
+  </div>
+
+  <div class="title-scroll-hint">▼ SCROLL TO START YOUR JOURNEY ▼</div>
+</section>
+
+
+<!-- ━━━━━━━━━━ WORLD 1 · GRASS LAND (ABOUT) ━━━━━━━━━━ -->
+<section class="world grass-land" id="about">
+  <div class="hill h1"></div>
+  <div class="hill h2"></div>
+  <svg class="deco-toad" style="top: 14%; right: 6%; width: 60px; height: 60px; transform: rotate(-6deg);"><use href="#toad"/></svg>
+  <div class="title-clouds">
+    <svg class="floating-cloud c1"><use href="#cloud"/></svg>
+    <svg class="floating-cloud c2"><use href="#cloud"/></svg>
+  </div>
+
+  <div class="container">
+    <div class="section-label">
+      <span class="world-num">WORLD 1-1</span>
+      <h2>▶ GRASS LAND</h2>
+      <div class="kr">캐릭터 소개 · About the Player</div>
+    </div>
+
+    <div class="about-grid">
+      <div class="prose-card">
+        <p class="lead">
+          I'm a developer who came up through <b>tax &amp; accounting practice</b> — a
+          strange and useful place to start. Five years of tax filings,
+          monthly closes, and audit response gave me an intuition for the
+          systems that actually run businesses.
+        </p>
+        <p>
+          The work was unromantic — patient effort where the numbers don't
+          tie out for reasons that aren't in any textbook, and most of the
+          day is <em>listening, reconciling, verifying</em>. It taught me
+          which problems are actually worth solving.
+        </p>
+        <p>
+          I write software because I kept wanting a better tool for the same
+          shape of problem — built from <b>inside the domain</b>, not bolted
+          on from an outside spec. So I built <b>six of them</b>, end to end.
+        </p>
+
+        <hr class="prose-rule">
+
+        <p class="kr">
+          5년 동안 한국 세무·회계 실무 현장에 있었습니다. 세무 신고 · 결산 마감 ·
+          세무조사 대응 — 어떤 텍스트북에도 안 나오는 이유로 숫자가 안
+          맞아서 매일 붙잡고 있던 일들.
+        </p>
+        <p class="kr">
+          그러면서 깨달은 게 있어요. <em>좋은 도구는 도메인 안에서
+          만들어진다.</em> 외부 스펙으로 만든 도구는 결국 현장 사람들이
+          안 씁니다. 그래서 직접 만들기로 했어요. 사람들의 불편함을 해소하고자
+          나만의 작은 팀 <b>"이음"</b>을 만들었고, 그 이름(<em>team-ieum</em>)으로
+          그때의 문제들을 AI · 룰 엔진 · RAG · 자동화로 풀어낸
+          <b>6개 서비스를 기획부터 배포까지 단독으로</b> 운영합니다.
+        </p>
+      </div>
+
+      <div class="about-side">
+        <div class="talking-flower">
+          <svg class="flower-icon"><use href="#flower"/></svg>
+          <p class="quote-text">
+            "문제를 <em>프로덕트</em>로 만드는 엔지니어. 데모가 아니라
+            매일 쓰는 사람이 있는 것을."
+          </p>
+          <div class="quote-attr">— A WORKING NOTE · 2025</div>
+        </div>
+
+        <div class="powerups-card">
+          <div class="powerups-title">▶ POWER-UPS · 강점</div>
+
+          <div class="powerup-item">
+            <svg class="powerup-icon"><use href="#mushroom"/></svg>
+            <div class="powerup-body">
+              <div class="powerup-name">DOMAIN FIRST</div>
+              <div class="powerup-desc">한국 세법 · K-IFRS · 세무조사. 책 아닌 부딪혀 배운 5년 실무.</div>
+            </div>
+          </div>
+          <div class="powerup-item">
+            <svg class="powerup-icon"><use href="#fireflower"/></svg>
+            <div class="powerup-body">
+              <div class="powerup-name">LLM, RELIABLY</div>
+              <div class="powerup-desc">자유 텍스트 금지 → JSON/tool_use. 룰엔진 baseline, LLM 보조. 출처/룰ID만 인용해 환각 차단.</div>
+            </div>
+          </div>
+          <div class="powerup-item">
+            <svg class="powerup-icon"><use href="#happystar"/></svg>
+            <div class="powerup-body">
+              <div class="powerup-name">SECURITY FIRST</div>
+              <div class="powerup-desc">eval() 0줄 · PII 마스킹 · JWT/argon2 · 멀티테넌트 cross-tenant 차단.</div>
+            </div>
+          </div>
+          <div class="powerup-item">
+            <svg class="powerup-icon"><use href="#mushroom1up"/></svg>
+            <div class="powerup-body">
+              <div class="powerup-name">SHIP &amp; OPERATE</div>
+              <div class="powerup-desc">Caddy + Docker Compose(EC2) · Vercel 배포 + 운영. 배포 후 직접 결함 찾아 수정.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills-row">
+      <div class="skill-card">
+        <span class="skill-label">DOMAIN · 도메인</span>
+        <ul class="skill-list">
+          <li><span><svg class="coin-icon"><use href="#coin"/></svg>Korean Tax Law</span><span class="yr">5y</span></li>
+          <li><span><svg class="coin-icon"><use href="#coin"/></svg>K-IFRS / GAAP</span><span class="yr">5y</span></li>
+          <li><span><svg class="coin-icon"><use href="#coin"/></svg>Tax Audit Defense</span><span class="yr">3y</span></li>
+          <li><span><svg class="coin-icon"><use href="#coin"/></svg>Bank Reconciliation</span><span class="yr">5y</span></li>
+          <li><span><svg class="coin-icon"><use href="#coin"/></svg>Year-End Settlement</span><span class="yr">5y</span></li>
+          <li><span><svg class="coin-icon"><use href="#coin"/></svg>Process Automation</span><span class="yr">4y</span></li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <span class="skill-label red">STACK · 기술</span>
+        <ul class="skill-list">
+          <li><b>Next.js 16</b> · React 19 · TS</li>
+          <li><b>FastAPI</b> · Python · Pydantic v2</li>
+          <li><b>OpenAI · Anthropic</b> · FAISS RAG · Whisper</li>
+          <li>PostgreSQL · SQLAlchemy/SQLModel</li>
+          <li><b>Docker · Caddy</b> · AWS EC2 · Vercel</li>
+          <li>SSE 실시간 · PWA · Zustand · Tailwind</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="smb-ground" aria-hidden="true"></div>
+</section>
+
+
+<!-- ━━━━━━━━━━ WORLD 2 · SKY LAND (TAX & ACCOUNTING) ━━━━━━━━━━ -->
+<section class="world sky-land" id="projects">
+  <div class="title-clouds">
+    <svg class="floating-cloud c1"><use href="#cloud"/></svg>
+    <svg class="floating-cloud c2"><use href="#cloud"/></svg>
+    <svg class="floating-cloud c3"><use href="#cloud"/></svg>
+    <svg class="floating-cloud c4"><use href="#cloud"/></svg>
+    <svg class="deco-toad" style="top: 10%; left: 5%; width: 56px; height: 56px; transform: rotate(6deg);"><use href="#toad"/></svg>
+  </div>
+
+  <div class="container">
+    <div class="section-label">
+      <span class="world-num">WORLD 2 · 세무·회계</span>
+      <h2>▶ SKY LAND</h2>
+      <div class="kr">STAGES 1-1 ~ 1-3 · 세무·회계 도메인 프로덕트</div>
+    </div>
+
+    <div class="project-grid">
+      <!-- Stage 1-1 · SUSEMI -->
+      <article class="project-card coin" data-collect="star" onclick="openPM('susemi')">
+        <div class="p-head">
+          <div class="p-head-l">
+            <svg class="p-icon"><use href="#block"/></svg>
+            <div class="p-titles">
+              <div class="p-stage">▶ STAGE 1-1 <span class="p-demo">▶ DETAIL · LIVE</span></div>
+              <div class="p-name">SUSEMI</div>
+              <div class="p-name-kr">수세미 · 연말정산 "왜?" 분석 엔진</div>
+            </div>
+          </div>
+          <div class="p-meta"><span class="p-cat coin">FIN · TAX</span><span class="p-year">2025</span></div>
+        </div>
+        <div class="p-body">
+          <div class="p-left">
+            <p class="p-thesis">시중 계산기는 <span class="em">"얼마"</span>만 — SUSEMI 는 <span class="em">"왜 그 금액인지"</span>를 법령 조항까지 trace.</p>
+            <p class="p-desc">정수 산식으로 직접 계산하고, 각 단계에 <b>법령 anchor</b>를 붙이고, 회사 신고분과 cross-check + 5년 시뮬·절세 추천까지.</p>
+            <p class="p-desc-kr">세액을 <b>정수 풀산식</b>으로 계산 → 단계별 <b>CalcStep trace</b> → LLM 은 시스템이 준 anchor 만 인용(환각 차단).</p>
+          </div>
+          <div class="p-right">
+            <div class="p-coins-label">▶ COIN COUNT</div>
+            <div class="p-coins">
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">237</span><span class="p-coin-label">TESTS</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">0</span><span class="p-coin-label">EVAL()</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">INT</span><span class="p-coin-label">정수산식</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">100%</span><span class="p-coin-label">SOLO</span></div></div>
+            </div>
+            <div class="p-stack">
+              <span class="p-stack-label">▶ POWER-UPS</span>
+              <b>Next.js 16</b> · <b>FastAPI</b> · Pydantic v2 · OpenAI · 법령 API · AWS
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stage 1-2 · JONGSOSE HELPER -->
+      <article class="project-card blue" data-collect="star" onclick="openPM('jongsose')">
+        <div class="p-head">
+          <div class="p-head-l">
+            <svg class="p-icon"><use href="#coin"/></svg>
+            <div class="p-titles">
+              <div class="p-stage">▶ STAGE 1-2 <span class="p-demo">▶ DETAIL · LIVE</span></div>
+              <div class="p-name">JONGSOSE HELPER</div>
+              <div class="p-name-kr">종합소득세 신고 도우미 · RAG 챗봇</div>
+            </div>
+          </div>
+          <div class="p-meta"><span class="p-cat blue">FIN · RAG</span><span class="p-year">2025</span></div>
+        </div>
+        <div class="p-body">
+          <div class="p-left">
+            <p class="p-thesis">일반 LLM 의 어림짐작이 아니라 <span class="em">공식 책자 원문</span>을 근거로 답해 숫자가 안 틀린다.</p>
+            <p class="p-desc">종소세 공식 책자(2025 귀속)를 임베딩 RAG 로 검색해 즉답. 근거 없으면 <b>"책자에 없음"</b>. 홈택스 서식 캡처는 <b>Vision</b> 으로 검토.</p>
+            <p class="p-desc-kr">일상어("월급쟁이","장부없이") → 도메인어 동의어 매핑. 인용 카드 클릭 시 원문 페이지 PNG + OCR 직접 확인.</p>
+          </div>
+          <div class="p-right">
+            <div class="p-coins-label">▶ COIN COUNT</div>
+            <div class="p-coins">
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">RAG</span><span class="p-coin-label">책자근거</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">0</span><span class="p-coin-label">환각</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">VIS</span><span class="p-coin-label">서식검토</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">1D</span><span class="p-coin-label">TO MVP</span></div></div>
+            </div>
+            <div class="p-stack">
+              <span class="p-stack-label">▶ POWER-UPS</span>
+              <b>Next.js</b> · <b>GPT-4o</b> · 임베딩 RAG · Vision · Vercel
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stage 1-3 · JANGBU DOCTOR -->
+      <article class="project-card red" data-collect="star" onclick="openPM('jangbu')">
+        <div class="p-head">
+          <div class="p-head-l">
+            <svg class="p-icon"><use href="#brick"/></svg>
+            <div class="p-titles">
+              <div class="p-stage">▶ STAGE 1-3 <span class="p-demo">▶ DETAIL · LIVE</span></div>
+              <div class="p-name">JANGBU DOCTOR</div>
+              <div class="p-name-kr">장부닥터 · 통장 CSV → 세무조사 위험거래 점검</div>
+            </div>
+          </div>
+          <div class="p-meta"><span class="p-cat">FIN · AUDIT</span><span class="p-year">2025</span></div>
+        </div>
+        <div class="p-body">
+          <div class="p-left">
+            <p class="p-thesis"><span class="em">세무사 자문을 대체하지 않고</span>, 1년 뒤 조사에서 터질 거래를 매월 미리 잡는다.</p>
+            <p class="p-desc">통장 CSV → <b>결정론적 룰 엔진</b> 6종이 위험 거래를 등급화(법령 근거 + 조치 제안), 필요 시 LLM 보강. 처방전 · 엑셀 내보내기.</p>
+            <p class="p-desc-kr">접대비(법인세법 §25)·차량비·가공거래·부가세 등 <b>조사에서 실제 문제되는 항목</b>을 룰로 코드화. 통장 데이터 마스킹.</p>
+          </div>
+          <div class="p-right">
+            <div class="p-coins-label">▶ COIN COUNT</div>
+            <div class="p-coins">
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">6</span><span class="p-coin-label">RULE SETS</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">RAG</span><span class="p-coin-label">법령근거</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">MASK</span><span class="p-coin-label">통장보호</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">XLSX</span><span class="p-coin-label">리포트</span></div></div>
+            </div>
+            <div class="p-stack">
+              <span class="p-stack-label">▶ POWER-UPS</span>
+              <b>Next.js</b> · 룰엔진(TS) · 법령 RAG · OpenAI · jsPDF · Vercel
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="smb-ground" aria-hidden="true"></div>
+</section>
+
+
+<!-- ━━━━━━━━━━ WORLD 3 · PIPE LAND (AI PLATFORM / INFRA) ━━━━━━━━━━ -->
+<section class="world pipe-land">
+  <div class="title-clouds">
+    <svg class="floating-cloud c1"><use href="#cloud"/></svg>
+    <svg class="floating-cloud c2" style="top: 38%; left: 14%; width: 70px;"><use href="#cloud"/></svg>
+    <svg class="floating-cloud c3"><use href="#cloud"/></svg>
+  </div>
+  <svg class="deco-pipe p1"><use href="#pipe"/></svg>
+  <svg class="deco-pipe p2"><use href="#pipe"/></svg>
+  <svg class="deco-pipe p3"><use href="#pipe"/></svg>
+  <svg class="deco-toad" style="top: 16%; right: 6%; width: 70px; height: 70px;"><use href="#yoshi"/></svg>
+
+  <div class="container">
+    <div class="section-label">
+      <span class="world-num">WORLD 3 · AI 플랫폼·인프라</span>
+      <h2>▶ PIPE LAND</h2>
+      <div class="kr">STAGES 2-1 ~ 2-3 · RAG · 에이전트 · 멀티테넌트 · 실시간</div>
+    </div>
+
+    <div class="project-grid">
+      <!-- Stage 2-1 · SAFETY AI (EHS) -->
+      <article class="project-card pipe" data-collect="star" onclick="openPM('safety')">
+        <div class="p-head">
+          <div class="p-head-l">
+            <svg class="p-icon"><use href="#pipe"/></svg>
+            <div class="p-titles">
+              <div class="p-stage">▶ STAGE 2-1 <span class="p-demo">▶ DETAIL · LIVE</span></div>
+              <div class="p-name">SAFETY · AI</div>
+              <div class="p-name-kr">안전AI · 산업안전(EHS) 위험관리 SaaS</div>
+            </div>
+          </div>
+          <div class="p-meta"><span class="p-cat pipe">EHS · SAAS</span><span class="p-year">2025</span></div>
+        </div>
+        <div class="p-body">
+          <div class="p-left">
+            <p class="p-thesis"><span class="em">관리자 웹 + 작업자 PWA</span> 듀얼 트랙, 하나의 백엔드. 현장을 위한 멀티테넌트 SaaS.</p>
+            <p class="p-desc">사고 등록 → AI 근본원인·체크리스트·법적근거 분석 → 대시보드/월간 PDF. <b>AI 에이전트 4종</b> + FAISS 법령 RAG.</p>
+            <p class="p-desc-kr">멀티테넌트 <b>4-Role RBAC</b>(모든 쿼리 company_id 격리), Whisper 음성신고, 외국인 5개국어 안전가이드(QR).</p>
+          </div>
+          <div class="p-right">
+            <div class="p-coins-label">▶ COIN COUNT</div>
+            <div class="p-coins">
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">4</span><span class="p-coin-label">AI AGENTS</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">50+</span><span class="p-coin-label">APIs</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">4</span><span class="p-coin-label">ROLES</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">5</span><span class="p-coin-label">LANGS</span></div></div>
+            </div>
+            <div class="p-stack">
+              <span class="p-stack-label">▶ POWER-UPS</span>
+              <b>FastAPI</b> · <b>React 19</b> · Whisper · <b>FAISS RAG</b> · PWA · PostgreSQL
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stage 2-2 · F2A -->
+      <article class="project-card brick" data-collect="star" onclick="openPM('f2a')">
+        <div class="p-head">
+          <div class="p-head-l">
+            <svg class="p-icon"><use href="#fireflower"/></svg>
+            <div class="p-titles">
+              <div class="p-stage">▶ STAGE 2-2 <span class="p-demo">▶ DETAIL · LIVE</span></div>
+              <div class="p-name">F2A</div>
+              <div class="p-name-kr">Feedback to Action · 병원 리뷰 LLM 자동 분류</div>
+            </div>
+          </div>
+          <div class="p-meta"><span class="p-cat brick">AI · HEALTH</span><span class="p-year">2025</span></div>
+        </div>
+        <div class="p-body">
+          <div class="p-left">
+            <p class="p-thesis">병원이 놓치는 <span class="em">P0 컴플레인(의료사고·환자안전)</span>을 LLM 으로 골라낸다.</p>
+            <p class="p-desc">리뷰 인입 → <b>PII 마스킹(저장 전)</b> → LLM triage(category/severity/team) → 대시보드 7페이지. P0 는 <b>키워드 룰로 이중검증</b>.</p>
+            <p class="p-desc-kr">구조화 출력 강제(OpenAI json_object / Claude tool_use). 모델 prefix 로 <b>OpenAI·Anthropic 라우팅</b>, 호출마다 비용 1행 적재.</p>
+          </div>
+          <div class="p-right">
+            <div class="p-coins-label">▶ COIN COUNT</div>
+            <div class="p-coins">
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">P0~3</span><span class="p-coin-label">SEVERITY</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">PII</span><span class="p-coin-label">MASKED</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">2</span><span class="p-coin-label">LLM PROVS</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">7</span><span class="p-coin-label">PAGES</span></div></div>
+            </div>
+            <div class="p-stack">
+              <span class="p-stack-label">▶ POWER-UPS</span>
+              <b>FastAPI</b> · <b>OpenAI · Anthropic</b> · SQLModel · PostgreSQL · Next.js 15
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Stage 2-3 · NETSCOPE-AI -->
+      <article class="project-card blue" data-collect="star" onclick="openPM('netscope')">
+        <div class="p-head">
+          <div class="p-head-l">
+            <svg class="p-icon"><use href="#happystar"/></svg>
+            <div class="p-titles">
+              <div class="p-stage">▶ STAGE 2-3 <span class="p-demo">▶ DETAIL · LIVE</span></div>
+              <div class="p-name">NETSCOPE · AI</div>
+              <div class="p-name-kr">설명가능 로그 진단 · Explainable Log Diagnostics</div>
+            </div>
+          </div>
+          <div class="p-meta"><span class="p-cat blue">XAI · LOG</span><span class="p-year">2025</span></div>
+        </div>
+        <div class="p-body">
+          <div class="p-left">
+            <p class="p-thesis">"위험하다"가 아니라 <span class="em">"왜 그렇게 판단했는가"</span>를 룰 ID·근거·점수로.</p>
+            <p class="p-desc">결정론적 룰 엔진(<b>R001~R024</b>)을 baseline 으로, Drain 패턴 학습(L0~L4) + <b>실시간 SSE</b> + GPT 보고서. LLM 은 룰을 뒤집지 않는다.</p>
+            <p class="p-desc-kr">온라인 패턴 학습은 안전 가드(폭주 방지) + 테넌트 격리. 분석 엔진은 ORM 미의존 → 테스트 용이. 쿠키 JWT 멀티테넌트.</p>
+          </div>
+          <div class="p-right">
+            <div class="p-coins-label">▶ COIN COUNT</div>
+            <div class="p-coins">
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">24</span><span class="p-coin-label">RULES</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">L0-4</span><span class="p-coin-label">LEARNING</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">SSE</span><span class="p-coin-label">실시간</span></div></div>
+              <div class="p-coin"><svg class="p-coin-icon"><use href="#coin"/></svg><div><span class="p-coin-num">43</span><span class="p-coin-label">TESTS</span></div></div>
+            </div>
+            <div class="p-stack">
+              <span class="p-stack-label">▶ POWER-UPS</span>
+              <b>FastAPI</b> · Drain · <b>SSE</b> · OpenAI · Next.js 16 · PostgreSQL 16
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="smb-ground" aria-hidden="true"></div>
+</section>
+
+
+<!-- ━━━━━━━━━━ WORLD 4 · CASTLE (CURRENTLY + CONTACT) ━━━━━━━━━━ -->
+<section class="world castle-world" id="currently">
+  <svg class="deco-heart" style="top: 12%; right: 8%; width: 30px; height: 30px; opacity:0.9;"><use href="#heart"/></svg>
+  <div class="container">
+    <div class="castle-scene">
+      <svg class="flag"><use href="#flag"/></svg>
+      <svg class="castle"><use href="#castle"/></svg>
+    </div>
+
+    <div class="section-label">
+      <span class="world-num">WORLD CASTLE</span>
+      <h2>▶ FINAL STAGE</h2>
+      <div class="kr"><svg class="heart-pulse"><use href="#heart"/></svg> CURRENTLY 2026 · 탐구 중 · 다음 게임 준비 <svg class="heart-pulse"><use href="#heart"/></svg></div>
+    </div>
+
+    <div class="now-grid">
+      <div class="now-card">
+        <svg class="now-icon"><use href="#mushroom"/></svg>
+        <div class="now-body">
+          <div class="now-cat">▶ EXPLORING</div>
+          <div class="now-title">RegTech · Compliance AI</div>
+          <div class="now-desc">규제·세법·감사 영역에서 AI 가 사람을 대체하지 않고 <b>증강</b>하는 도구.</div>
+        </div>
+      </div>
+      <div class="now-card">
+        <svg class="now-icon"><use href="#fireflower"/></svg>
+        <div class="now-body">
+          <div class="now-cat">▶ BUILDING</div>
+          <div class="now-title">Domain-First B2B SaaS</div>
+          <div class="now-desc">기능이 아니라 <b>워크플로우</b>에서 출발하는 멀티테넌트 SaaS.</div>
+        </div>
+      </div>
+      <div class="now-card">
+        <svg class="now-icon"><use href="#happystar"/></svg>
+        <div class="now-body">
+          <div class="now-cat">▶ CRAFTING</div>
+          <div class="now-title">Audit-Grade AI Systems</div>
+          <div class="now-desc">Provenance · 검증 가능성 · 감사 추적이 1급 시민인 AI.</div>
+        </div>
+      </div>
+      <div class="now-card">
+        <svg class="now-icon"><use href="#mushroom1up"/></svg>
+        <div class="now-body">
+          <div class="now-cat">▶ SHIPPING</div>
+          <div class="now-title">Real Products, Real Users</div>
+          <div class="now-desc">데모 끝나면 사라지는 프로토타입 말고, <b>매일 쓰는 사람</b>이 있는 것을.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="castle-contact" id="contact">
+      <div class="cc-banner">★ GAME COMPLETE ★</div>
+      <div class="cc-sub">▶ LET'S BUILD SOMETHING THAT MATTERS</div>
+      <p class="cc-kr">
+        도메인 전문가가 만든 소프트웨어가 필요하다면, 자동화 · AI ·
+        시스템 설계에 관심이 있다면 — 편하게 연락 주세요.
+      </p>
+      <div class="cc-contacts">
+        <a class="cc-contact" href="mailto:hihello516@naver.com">
+          <span class="lbl">📧 EMAIL</span>
+          <span class="val">hihello516@naver.com</span>
+        </a>
+        <a class="cc-contact" href="https://github.com/KANGJIYEON2" target="_blank" rel="noopener">
+          <span class="lbl">🎮 GITHUB</span>
+          <span class="val">@KANGJIYEON2</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="lava-strip"></div>
+</section>
+
+
+<!-- ━━━━━━━━━━ FOOTER ━━━━━━━━━━ -->
+<footer>
+  <div class="game">▶ THANK YOU FOR PLAYING ◀</div>
+  <div class="made">강지연 · Kang Jiyeon · World 1-2026 · Seoul, KR · 6 PRODUCTS · 100% SOLO</div>
+  <div class="copy">© MMXXVI · Made with 🍄 + 🪙 + ★</div>
+</footer>
+
+
+<!-- ━━━━━━━━━━ PROJECT DETAIL MODALS (no video — detail + URL) ━━━━━━━━━━ -->
+
+<!-- SUSEMI -->
+<div class="pm-overlay" id="pm-susemi" onclick="pmOverlay(event)">
+  <div class="pm-modal">
+    <div class="pm-head">
+      <div class="pm-head-l">
+        <div class="pm-stage">▶ STAGE 1-1 · FIN · TAX</div>
+        <div class="pm-title">SUSEMI</div>
+        <div class="pm-title-kr">수세미 · 연말정산 "왜?" 분석 엔진</div>
+      </div>
+      <button class="pm-close" onclick="closePM()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="pm-def">연말정산 결과를 숫자가 아니라 "왜"를 — 법령과 공식으로 증명하는 분석 엔진</div>
+      <div class="pm-row"><span class="pm-label">PROBLEM</span><div class="pm-text">시중 계산기는 "환급 OO원"만 보여줄 뿐, <span class="hl">왜 그 금액인지·어디서 더 줄일 수 있는지</span>를 설명하지 않는다.</div></div>
+      <div class="pm-row"><span class="pm-label">SOLUTION</span><div class="pm-text">세액을 ① <span class="hl">정수(원 단위) 풀산식</span>으로 직접 계산하고 ② 각 단계에 <span class="hl">CalcStep(법령 anchor·공식·입출력) trace</span> ③ 회사 신고분과 cross-check ④ 5년 시뮬·절세 추천. 룰은 JSON + Pydantic discriminated union 으로 평가해 <span class="hl">eval() 0줄</span>. LLM "Why" 해설은 시스템이 준 anchor 만 인용 → 환각 차단.</div></div>
+      <div class="pm-row"><span class="pm-label brick-l">검증</span><div class="pm-text">pytest 237 케이스 + 골든셋 5건. 배포 후 직접 발견·수정: <span class="hl">/analyze 비과세 이중차감 버그</span>(화면마다 세액 불일치)를 cross-check 로 잡아 4개 경로 입력 변환 일관화.</div></div>
+      <div class="pm-row"><span class="pm-label coin-l">STACK</span><div class="pm-chips"><span class="pm-chip">Next.js 16</span><span class="pm-chip">FastAPI</span><span class="pm-chip">Pydantic v2</span><span class="pm-chip">OpenAI</span><span class="pm-chip">법령 API</span><span class="pm-chip">AWS</span></div></div>
+      <a class="pm-link" href="https://susemi.team-ieum.com" target="_blank" rel="noopener">🎮 라이브 바로가기 ▶ susemi.team-ieum.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- JONGSOSE HELPER -->
+<div class="pm-overlay" id="pm-jongsose" onclick="pmOverlay(event)">
+  <div class="pm-modal">
+    <div class="pm-head">
+      <div class="pm-head-l">
+        <div class="pm-stage">▶ STAGE 1-2 · FIN · RAG</div>
+        <div class="pm-title">JONGSOSE HELPER</div>
+        <div class="pm-title-kr">종합소득세 신고 도우미 · RAG 챗봇</div>
+      </div>
+      <button class="pm-close" onclick="closePM()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="pm-def">공식 종합소득세 책자(2025 귀속)를 근거로 신고 절차·용어·서식을 즉답하는 RAG 챗봇</div>
+      <div class="pm-row"><span class="pm-label">PROBLEM</span><div class="pm-text">"추계가 뭐냐", "단순경비율 신고 어떻게 하냐" 같은 질문에 매번 책자를 뒤지면 느리고 <span class="hl">사람마다 답이 흔들린다.</span></div></div>
+      <div class="pm-row"><span class="pm-label">SOLUTION</span><div class="pm-text">책자 임베딩을 코사인 검색해 <span class="hl">근거 절(page PNG + OCR)</span>로 답하고, 없으면 그럴듯하게 짓지 않고 <span class="hl">"책자에 없음"</span>. 일상어→도메인어 동의어 매핑("프리랜서"→"사업소득/추계"). 홈택스 서식 캡처는 gpt-4o Vision 으로 누락·오류 검토.</div></div>
+      <div class="pm-row"><span class="pm-label brick-l">UX·권한</span><div class="pm-text">답변 인용 카드 클릭 → <span class="hl">/kb 뷰어에서 원문 페이지 + OCR</span> 직접 검증. 관리자 승인 전 ID 는 1회 체험 후 잠금(LLM 비용 통제).</div></div>
+      <div class="pm-row"><span class="pm-label coin-l">STACK</span><div class="pm-chips"><span class="pm-chip">Next.js (App Router)</span><span class="pm-chip">GPT-4o</span><span class="pm-chip">임베딩 RAG</span><span class="pm-chip">Vision</span><span class="pm-chip">Vercel</span></div></div>
+      <a class="pm-link" href="https://jongsose-helper.vercel.app" target="_blank" rel="noopener">🎮 라이브 바로가기 ▶ jongsose-helper.vercel.app</a>
+    </div>
+  </div>
+</div>
+
+<!-- JANGBU DOCTOR -->
+<div class="pm-overlay" id="pm-jangbu" onclick="pmOverlay(event)">
+  <div class="pm-modal">
+    <div class="pm-head">
+      <div class="pm-head-l">
+        <div class="pm-stage">▶ STAGE 1-3 · FIN · AUDIT</div>
+        <div class="pm-title">JANGBU DOCTOR</div>
+        <div class="pm-title-kr">장부닥터 · 통장 CSV → 세무조사 위험거래 점검</div>
+      </div>
+      <button class="pm-close" onclick="closePM()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="pm-def">통장 CSV 한 번 올리면 세무조사에 걸릴 거래만 골라주는 AI 사전 점검 도구</div>
+      <div class="pm-row"><span class="pm-label">PROBLEM</span><div class="pm-text">기장을 위탁한 회사의 경리/경영지원팀은 <span class="hl">무엇이 위험한지 모른 채</span> 1년을 보내고, 세무조사에서야 접대비·차량비·가공거래 문제가 드러난다.</div></div>
+      <div class="pm-row"><span class="pm-label">SOLUTION</span><div class="pm-text">통장 CSV → 은행별 포맷 정규화·마스킹 → <span class="hl">결정론적 룰 엔진 6종</span>(접대비 §25·차량비·개인경비·부가세·이상패턴·일반지출) 병렬 평가 → 거래별 위험 등급 + 법령 근거 + 조치 제안 → 처방전·엑셀. 룰이 가리키는 조항은 법령 RAG 로 강화.</div></div>
+      <div class="pm-row"><span class="pm-label brick-l">포지셔닝</span><div class="pm-text">"세무사 대체 ❌ / 사전 체크리스트 ✅". 책임 범위를 분명히 하고 Disclaimer 로 오해 방지 — <span class="hl">규제 도메인 제품의 신중함.</span></div></div>
+      <div class="pm-row"><span class="pm-label coin-l">STACK</span><div class="pm-chips"><span class="pm-chip">Next.js</span><span class="pm-chip">룰 엔진(TS)</span><span class="pm-chip">법령 RAG</span><span class="pm-chip">OpenAI</span><span class="pm-chip">통장 마스킹</span><span class="pm-chip">Vercel</span></div></div>
+      <a class="pm-link" href="https://jangbu-doctor.vercel.app" target="_blank" rel="noopener">🎮 라이브 바로가기 ▶ jangbu-doctor.vercel.app</a>
+    </div>
+  </div>
+</div>
+
+<!-- SAFETY AI (EHS) -->
+<div class="pm-overlay" id="pm-safety" onclick="pmOverlay(event)">
+  <div class="pm-modal">
+    <div class="pm-head">
+      <div class="pm-head-l">
+        <div class="pm-stage">▶ STAGE 2-1 · EHS · SAAS · LIVE</div>
+        <div class="pm-title">SAFETY · AI</div>
+        <div class="pm-title-kr">안전AI · 산업안전(EHS) 위험관리 SaaS</div>
+      </div>
+      <button class="pm-close" onclick="closePM()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="pm-def">관리자 웹 + 작업자 PWA 듀얼 트랙 멀티테넌트 산업안전(EHS) 플랫폼</div>
+      <div class="pm-row"><span class="pm-label">PROBLEM</span><div class="pm-text">중소 제조 현장은 사고 기록·위험성 평가·교육이 <span class="hl">종이/엑셀</span>에 흩어져 있고, 외국인 작업자 비중이 높아 안전수칙 전달도 어렵다.</div></div>
+      <div class="pm-row"><span class="pm-label">SOLUTION</span><div class="pm-text">사고 등록 → AI 근본원인/체크리스트/법적근거 → 대시보드·월간 PDF. <span class="hl">BaseAgent 상속 AI 에이전트 4종</span>(사고분석/법령/뉴스/음성), FAISS 법령 RAG(법령 784+룰 13,802), Whisper 음성신고, 익명 제보, 5개국어 안전가이드(QR). 멀티테넌트 4-Role RBAC — 모든 쿼리 company_id 격리.</div></div>
+      <div class="pm-row"><span class="pm-label brick-l">검증</span><div class="pm-text">배포 후 멀티에이전트 코드리뷰로 <span class="hl">cross-tenant 누수 5건</span>(TBM/포인트/퀴즈/번역/사고배정) 발견·차단, 약한 JWT 시크릿 강화, 헬스체크 오탐 수정.</div></div>
+      <div class="pm-row"><span class="pm-label coin-l">STACK</span><div class="pm-chips"><span class="pm-chip">FastAPI</span><span class="pm-chip">React 19</span><span class="pm-chip">Whisper</span><span class="pm-chip">FAISS RAG</span><span class="pm-chip">PWA</span><span class="pm-chip">PostgreSQL</span></div></div>
+      <a class="pm-link" href="https://safety-ai.team-ieum.com" target="_blank" rel="noopener">🎮 라이브 바로가기 ▶ safety-ai.team-ieum.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- F2A -->
+<div class="pm-overlay" id="pm-f2a" onclick="pmOverlay(event)">
+  <div class="pm-modal">
+    <div class="pm-head">
+      <div class="pm-head-l">
+        <div class="pm-stage">▶ STAGE 2-2 · AI · HEALTH · LIVE</div>
+        <div class="pm-title">F2A · FEEDBACK TO ACTION</div>
+        <div class="pm-title-kr">병원 리뷰 LLM 자동 분류 시스템</div>
+      </div>
+      <button class="pm-close" onclick="closePM()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="pm-def">병원/의원 환자 리뷰를 LLM 으로 자동 triage 해 운영 개선 인사이트를 주는 시스템</div>
+      <div class="pm-row"><span class="pm-label">PROBLEM</span><div class="pm-text">병원은 매일 쌓이는 리뷰를 수작업으로 못 봐 <span class="hl">의료사고성 컴플레인(P0)·시설 위생 문제</span> 같은 중요한 신호를 놓친다.</div></div>
+      <div class="pm-row"><span class="pm-label">SOLUTION</span><div class="pm-text">인입(CSV/단건/배치) → <span class="hl">저장 전 PII 마스킹</span> → LLM triage(category·severity·team) → 대시보드 7페이지. P0(환자안전)은 <span class="hl">키워드 룰로 이중검증</span>, 미충족 시 P1 강등. 구조화 출력 강제(OpenAI json_object / Anthropic tool_use), 모델 prefix 로 멀티 LLM 라우팅, 호출마다 LLMUsage 비용 1행 적재.</div></div>
+      <div class="pm-row"><span class="pm-label blue-l">접속</span><div class="pm-text">로그인 화면 <span class="hl">"데모 둘러보기"</span> → 키 없이 읽기 전용 탐색(API Key 는 sha256 해시만 저장, 평문 미저장).</div></div>
+      <div class="pm-row"><span class="pm-label coin-l">STACK</span><div class="pm-chips"><span class="pm-chip">FastAPI</span><span class="pm-chip">OpenAI</span><span class="pm-chip">Anthropic</span><span class="pm-chip">SQLModel</span><span class="pm-chip">PostgreSQL 15</span><span class="pm-chip">Next.js 15</span></div></div>
+      <a class="pm-link" href="https://f2a.team-ieum.com" target="_blank" rel="noopener">🎮 라이브 바로가기 ▶ f2a.team-ieum.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- NETSCOPE-AI -->
+<div class="pm-overlay" id="pm-netscope" onclick="pmOverlay(event)">
+  <div class="pm-modal">
+    <div class="pm-head">
+      <div class="pm-head-l">
+        <div class="pm-stage">▶ STAGE 2-3 · XAI · LOG · LIVE</div>
+        <div class="pm-title">NETSCOPE · AI</div>
+        <div class="pm-title-kr">설명가능 로그 진단 · Explainable Log Diagnostics</div>
+      </div>
+      <button class="pm-close" onclick="closePM()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="pm-def">"왜 그렇게 판단했는가"를 룰 ID·근거·점수로 보여주는 설명가능 로그 진단 플랫폼</div>
+      <div class="pm-row"><span class="pm-label">PROBLEM</span><div class="pm-text">로그 알림 도구는 보통 "에러 N건"만 띄울 뿐, <span class="hl">왜 위험한지·무엇을 봐야 하는지</span> 설명하지 않아 신뢰하기 어렵다.</div></div>
+      <div class="pm-row"><span class="pm-label">SOLUTION</span><div class="pm-text">결정론적 룰 엔진(<span class="hl">R001~R024 + 13 interaction_bonus</span>)으로 severity·confidence 산출(재현 가능), Drain 알고리즘으로 로그 템플릿 온라인 학습(L0~L4, 안전 가드로 폭주 방지), <span class="hl">SSE 실시간 푸시</span>(테넌트 필터). GPT 보고서는 "룰을 뒤집지 말 것"을 강제 → 자연어 설명만 보강. 분석 엔진은 ORM 미의존.</div></div>
+      <div class="pm-row"><span class="pm-label brick-l">검증</span><div class="pm-text">pytest 43. 배포 후 <span class="hl">멀티테넌트 패턴 PK 충돌(HIGH)</span>을 정적 리뷰로, <span class="hl">배치 내 중복 INSERT</span>를 라이브 종단 테스트로 각각 발견·수정.</div></div>
+      <div class="pm-row"><span class="pm-label coin-l">STACK</span><div class="pm-chips"><span class="pm-chip">FastAPI</span><span class="pm-chip">Drain</span><span class="pm-chip">SSE</span><span class="pm-chip">OpenAI</span><span class="pm-chip">Next.js 16</span><span class="pm-chip">PostgreSQL 16</span></div></div>
+      <a class="pm-link" href="https://netscope-ai.team-ieum.com" target="_blank" rel="noopener">🎮 라이브 바로가기 ▶ netscope-ai.team-ieum.com</a>
+      <div class="pm-text" style="margin-top:12px;">데모 로그인: <span class="hl">alice@demo.io</span> / PW <span class="hl">Demo1234!</span> (테넌트별 데이터 분리)</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ━━━━━━━━━━ JS — Interactive bits ━━━━━━━━━━ -->
+<script>
+(function() {
+  let scrolled = false;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80 && !scrolled) { document.body.classList.add('scrolled'); scrolled = true; }
+    else if (window.scrollY <= 80 && scrolled) { document.body.classList.remove('scrolled'); scrolled = false; }
+  });
+
+  const collected = new Set();
+  const starEl = document.getElementById('starCount');
+  const coinEl = document.getElementById('coinCount');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !collected.has(entry.target)) {
+        collected.add(entry.target);
+        const count = collected.size;
+        starEl.textContent = String(count).padStart(2, '0');
+        starEl.classList.remove('popped');
+        void starEl.offsetWidth;
+        starEl.classList.add('popped');
+        setTimeout(() => starEl.classList.remove('popped'), 400);
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-collect="star"]').forEach(el => observer.observe(el));
+
+  function updateCoins() {
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = Math.min(window.scrollY / docHeight, 1);
+    const coins = Math.floor(progress * 88);
+    coinEl.textContent = '×' + String(coins).padStart(2, '0');
+  }
+  window.addEventListener('scroll', updateCoins, { passive: true });
+  updateCoins();
+
+  // ? Block bounce on click
+  document.querySelectorAll('.p-icon, .title-corner').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      el.style.transition = 'transform 0.18s ease-out';
+      el.style.transform = 'translateY(-12px) rotate(-3deg)';
+      setTimeout(() => { el.style.transform = ''; }, 200);
+    });
+  });
+
+  const popObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.target.classList.contains('pop-in-prep')) {
+        const delay = parseInt(entry.target.dataset.popDelay || 0);
+        setTimeout(() => {
+          entry.target.classList.remove('pop-in-prep');
+          entry.target.classList.add('pop-in-active');
+        }, delay);
+        popObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.project-card, .skill-card, .powerups-card, .talking-flower, .castle-contact').forEach(el => {
+    el.classList.add('pop-in-prep'); popObserver.observe(el);
+  });
+  document.querySelectorAll('.now-card').forEach((el, i) => {
+    el.classList.add('pop-in-prep'); el.dataset.popDelay = String(i * 120); popObserver.observe(el);
+  });
+
+  if (window.scrollY > 80) { document.body.classList.add('scrolled'); scrolled = true; }
+})();
+
+  function openPM(id){var m=document.getElementById('pm-'+id);if(m){m.classList.add('open');document.body.style.overflow='hidden';}}
+  function closePM(){document.querySelectorAll('.pm-overlay.open').forEach(function(m){m.classList.remove('open');});document.body.style.overflow='';}
+  function pmOverlay(e){if(e.target.classList.contains('pm-overlay'))closePM();}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closePM();});
+</script>
+
+</body>
+</html>
